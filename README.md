@@ -129,7 +129,7 @@ You can use the database user *vagrant* to access the MySQL server from your hos
 
 The box comes with 2 Elasticsearch nodes running as a cluster (Clustername is `noerdlastic_2x_local`, the version is pinned to 2.3.4 which marks the current stable 2.x Release).
 
-To access Plugins (see below for a list of installed ones) or use Elasticsearch from your computer in other ways there's a proxy-configuration on nginx in place which makes you able to use the host http://noerdsearch.local.noerdisch.net.
+To access Plugins (see below for a list of installed ones) or use Elasticsearch from your computer in other ways there's a proxy-configuration on haproxy in place which makes you able to use the host http://elasticsearch.local.noerdisch.net:9200.
 
 ## Currently installed Packages
 
@@ -140,7 +140,7 @@ The box is using Ubuntu 16.04. The base box image is kept up to date on a spare-
 * Redis Server
 * [nginx](https://nginx.org)
 * [PHP](https://www.php.net) (5.5, 5.6, 7.0, 7.1) as CLI & FastCGI server, "batteries included" ([PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/+index))
-* [MailHog](https://github.com/mailhog/MailHog/) docker container accessible at http://mail.local.noerdisch.net:8025
+* [MailHog](https://github.com/mailhog/MailHog/) docker container accessible at http://local.noerdisch.net:8025
 * [haproxy](http://www.haproxy.org/) to pass traffic from web to database box ([stats](http://local.noerdisch.net:1936/haproxy))
 * [Elasticsearch](https://www.elastic.co/products/elasticsearch) 2.x vendor package (accessible at http://elasticsearch.local.noerdisch.net:9200/)
     * Plugin: [kopf](http://elasticsearch.local.noerdisch.net:9200/_plugin/kopf) ([source](https://github.com/lmenezes/elasticsearch-kopf))
