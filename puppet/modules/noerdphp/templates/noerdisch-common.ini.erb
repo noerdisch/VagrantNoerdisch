@@ -1,0 +1,69 @@
+;#####
+;## THIS FILE IS MANAGED BY PUPPET
+;##
+;## DO NOT TOUCH!
+;#####
+
+expose_php             = On
+
+date.timezone          = Europe/Berlin
+
+max_execution_time     = 3600
+max_input_time         = 3600
+default_socket_timeout = 300
+memory_limit           = 1024M
+upload_max_filesize    = 512M
+post_max_size          = 512M
+max_input_vars         = 10000
+
+sendmail_path          = /usr/local/bin/mhsendmail
+
+session.save_handler   = files
+session.save_path      = /var/lib/php/sessions
+
+;session.save_handler   = memcache
+;session.save_path      = "tcp://127.0.0.1:11211?persistent=1&weight=1&timeout=1&retry_interval=15"
+
+error_reporting        = E_ALL | E_STRICT
+display_errors         = On
+display_startup_errors = On
+log_errors             = On
+error_log              = /var/log/php<%= scope.lookupvar('version') %>-error.log
+
+mysql.default_host     = <% @db_host %>
+mysql.default_port     = 3306
+mysql.default_user     = vagrant
+mysql.default_password = <%= @default_password %>
+
+mysqli.default_host    = <% @db_host %>
+mysqli.default_port    = 3306
+mysqli.default_user    = vagrant
+mysqli.default_pw      = <%= @default_password %>
+
+apc.enabled             = On
+apc.enable_cli          = Off
+apc.shm_size            = 32M
+
+; OPcache Settings
+opcache.enable                     = 0
+opcache.validate_timestamps        = 1
+opcache.revalidate_freq            = 0
+opcache.save_comments              = 1
+opcache.load_comments              = 1
+opcache.consistency_checks         = 10
+
+; XDebug settings
+xdebug.idekey                      = PhpStorm
+xdebug.scream                      = 0
+xdebug.remote_mode                 = req
+xdebug.remote_port                 = 9000
+xdebug.remote_enable               = 1
+xdebug.remote_handler              = dbgp
+xdebug.show_local_vars             = 1
+xdebug.remote_autostart            = 0
+xdebug.max_nesting_level           = 1000
+xdebug.remote_connect_back         = 1
+xdebug.show_exception_trace        = 0
+xdebug.var_display_max_data        = 1024
+xdebug.var_display_max_depth       = 5
+xdebug.remote_cookie_expire_time   = 3600

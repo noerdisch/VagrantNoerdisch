@@ -1,0 +1,15 @@
+#####
+## THIS FILE IS MANAGED BY PUPPET
+##
+## DO NOT TOUCH!
+#####
+
+[client]
+default-character-set = utf8mb4
+host = <%= @db_host %>
+password = <%= @default_password %>
+port = 3306
+user = vagrant
+
+[mysqldump]
+max_allowed_packet = 512M

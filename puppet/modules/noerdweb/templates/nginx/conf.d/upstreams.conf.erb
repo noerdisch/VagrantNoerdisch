@@ -1,0 +1,29 @@
+#####
+## THIS FILE IS MANAGED BY PUPPET
+##
+## DO NOT TOUCH!
+#####
+
+# FastCGI PHP 5.5
+upstream php55_fpm {
+    server 127.0.0.1:19055 max_fails=3 fail_timeout=4;
+    server 127.0.0.1:19055 max_fails=3 fail_timeout=4;
+}
+
+# FastCGI PHP 5.6
+upstream php56_fpm {
+    server 127.0.0.1:19056 max_fails=3 fail_timeout=4;
+    server 127.0.0.1:19056 max_fails=3 fail_timeout=4;
+}
+
+# FastCGI PHP 7.0
+upstream php70_fpm {
+    server 127.0.0.1:19070 max_fails=3 fail_timeout=4;
+    server 127.0.0.1:19070 max_fails=3 fail_timeout=4;
+}
+
+# FastCGI PHP 7.1 (Alpha)
+upstream php71_fpm {
+    server 127.0.0.1:19071 max_fails=3 fail_timeout=4;
+    server 127.0.0.1:19071 max_fails=3 fail_timeout=4;
+}

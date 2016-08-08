@@ -1,0 +1,8 @@
+.idea
+.vagrant
+
+_vHosts/*
+!_vHosts/.gitkeep
+
+_transfer/*
+!_transfer/.gitkeep

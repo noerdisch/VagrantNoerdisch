@@ -1,0 +1,40 @@
+#####
+## THIS FILE IS MANAGED BY PUPPET
+##
+## DO NOT TOUCH!
+#####
+
+server {
+    listen 80;
+
+    server_name
+        ~(?<eengine>(php55|php56|php70|php71)(?<dot>\.))?(?<project>.*)\.(?<environment>(<%= @environment %>-sf2)).noerdisch.net$;
+
+    root /var/www/sf2/$project/web;
+
+    access_log /var/log/nginx/access.sf2-$project.log;
+
+    location ~* (^|/)\. {
+        add_header "X-Status-Cause" "config";
+        return 403;
+    }
+
+    location ~* (\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$ {
+        add_header "X-Status-Cause" "config";
+        return 403;
+    }
+
+    location / {
+        index app_dev.php;
+        try_files $uri $uri/ /app_dev.php$is_args$args;
+    }
+
+    location ~ ^/(app|app_dev|config)\.php(/|$) {
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+
+        include conf.d/fastcgi.conf;
+        include conf.d/fastcgi_params;
+
+        fastcgi_pass $engine;
+    }
+}
