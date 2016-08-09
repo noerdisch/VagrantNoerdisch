@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision :shell, :inline => "cp /vagrant/puppet/Puppetfile /etc/puppet"
     config.vm.provision :shell, :inline => "cd /etc/puppet && rm -rf /etc/puppet/modules && librarian-puppet install"
-    config.vm.provision :shell, :inline => "apt-get -qy update"
+    config.vm.provision :shell, :inline => "while $(fuser /var/lib/dpkg/lock >/dev/null 2>&1) ; do echo -n 'waiting for dpkg lock ...' ; sleep 1 ; done && apt-get -qy update"
 
     config.vm.provision "puppet" do |puppet|
         puppet.facter = {
