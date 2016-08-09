@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
         box.vm.synced_folder "_transfer", "/opt/transfer", type: "nfs"
         box.vm.hostname = "phoenix-web"
         box.vm.provider "virtualbox" do |vb|
-            vb.name      = "Noerdisch Development Stack (web)"
+            vb.name      = "Noerdisch Development Stack (OpenSource Web)"
             vb.gui       = false
             vb.cpus      = CPUS.to_i
             vb.memory    = MEMORY.to_i
@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
         box.vm.synced_folder "_transfer", "/opt/transfer", type: "nfs"
         box.vm.hostname = "phoenix-db"
         box.vm.provider "virtualbox" do |vb|
-            vb.name      = "Noerdisch Development Stack (db)"
+            vb.name      = "Noerdisch Development Stack (OpenSource DB)"
             vb.gui       = false
             vb.cpus      = CPUS.to_i
             vb.memory    = MEMORY.to_i
