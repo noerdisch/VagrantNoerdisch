@@ -54,6 +54,24 @@ class noerdbase {
         matches         => '*',
     }
 
+    tidy { "clean_default_cron":
+        path            => "/etc/cron.daily",
+        recurse         => true,
+        matches         => [
+            "apt-compat",
+            "update-notifier-common"
+        ]
+    }
+
+    tidy { "clean_default_apt_config":
+        path            => "/etc/apt/apt.conf.d",
+        recurse         => true,
+        matches         => [
+            "10periodic",
+            "99update-notifier"
+        ]
+    }
+
     class { 'timezone':
         timezone        => 'Europe/Berlin',
         autoupgrade     => true

@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-BOX_VERSION = "20160805.1"
-BOX_CHECKSUM = "51211988680be77e72805ab913ba36324b9f57ffaa77349109c42a8752efe827"
+BOX_VERSION = "20160809.1"
+BOX_CHECKSUM = "f24966fd9d89401eb4b65b9ba99c91588c62a5d242ca63588266d27307ddb226"
 
 HOST_DB = "192.168.50.51"
 HOST_WEB = "192.168.50.50"
@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision :shell, :inline => "cp /vagrant/puppet/Puppetfile /etc/puppet"
     config.vm.provision :shell, :inline => "cd /etc/puppet && rm -rf /etc/puppet/modules && librarian-puppet install"
-    config.vm.provision :shell, :inline => "while $(fuser /var/lib/dpkg/lock >/dev/null 2>&1) ; do echo -n 'waiting for dpkg lock ...' ; sleep 1 ; done && apt-get -qy update"
+    config.vm.provision :shell, :inline => "while $(fuser /var/lib/dpkg/lock >/dev/null 2>&1) ; do echo 'waiting for dpkg lock release ...' ; sleep 1 ; done && ( sync; sync; sync; sleep 1; apt-get -qy update; )"
 
     config.vm.provision "puppet" do |puppet|
         puppet.facter = {
