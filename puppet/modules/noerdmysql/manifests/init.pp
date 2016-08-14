@@ -27,6 +27,7 @@ class noerdmysql {
             'query_cache_limit'     => '4M',
             'query_cache_size'      => '32M',
             'max_allowed_packet'    => '256M',
+            'sql_mode'              => 'NO_ENGINE_SUBSTITUTION',
             'default-storage-engine'         => 'INNODB',
             'innodb_file_per_table'          => 1,
             'innodb_buffer_pool_size'        => '128M',
