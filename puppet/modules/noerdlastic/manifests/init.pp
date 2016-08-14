@@ -5,7 +5,7 @@ class noerdlastic {
         manage_repo   => true,
         repo_version  => '2.x',
         package_pin   => true,
-        version       => '2.3.4',
+        version       => '2.3.5',
         autoupgrade   => true,
         status        => 'enabled',
         config        => { 'cluster.name' => 'noerdlastic_2x_local' },
