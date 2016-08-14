@@ -1,7 +1,17 @@
 class noerdproxy {
     Class["noerdbase"] -> Class["noerdproxy"]
 
-    include ::haproxy
+    include apt
+
+    apt::ppa { 'ppa:vbernat/haproxy-1.6': }
+
+    class { 'haproxy':
+        merge_options      => true,
+        package_ensure     => 'latest',
+        require            => [
+            Apt::Ppa['ppa:vbernat/haproxy-1.6']
+        ]
+    }
 
     haproxy::listen { 'mysql3306':
         collect_exported   => false,
