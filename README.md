@@ -127,7 +127,7 @@ You can use the database user *vagrant* to access the MySQL server from your hos
 
 ## Note on Elasticsearch
 
-The box comes with 2 Elasticsearch nodes running as a cluster (Clustername is `noerdlastic_2x_local`, the version is pinned to 2.3.4 which marks the current stable 2.x Release).
+The box comes with 2 Elasticsearch nodes running as a cluster (Clustername is `noerdlastic_2x_local`, the version is pinned to 2.3.5 which marks the current stable 2.x Release).
 
 To access Plugins (see below for a list of installed ones) or use Elasticsearch from your computer in other ways there's a proxy-configuration on haproxy in place which makes you able to use the host http://elasticsearch.local.noerdisch.net:9200.
 
