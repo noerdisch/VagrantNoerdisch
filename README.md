@@ -17,7 +17,7 @@ These boxes are named after [Phoenix](https://en.wikipedia.org/wiki/Phoenix_%28s
 ### Make sure you run at least
 
 * a Git client
-* [Vagrant](http://vagrantup.com/) 1.8.x
+* [Vagrant](http://vagrantup.com/) 1.8.3 (or later due to [GH-7159](https://github.com/mitchellh/vagrant/pull/7159))
     * Virtualbox Additions Plugin: `vagrant plugin install vagrant-vbguest`
 * [Virtualbox](http://www.virtualbox.org/) 5.0.x / 5.1.x
 
