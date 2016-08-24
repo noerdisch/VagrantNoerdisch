@@ -22,6 +22,19 @@ class noerdweb {
         notify     => Service["nginx"]
     }
 
+    file { "nginx_copy_additional_sites":
+        path       => '/etc/nginx/sites.d',
+        ensure     => directory,
+        source     => '/vagrant/_nginx-sites.d/',
+        ignore     => '.DS_Store',
+        purge      => true,
+        owner      => 'root',
+        group      => 'root',
+        replace    => true,
+        recurse    => remote,
+        notify     => Service["nginx"]
+    }
+
     file { "/var/log/nginx/":
         ensure     => directory,
         owner      => "vagrant",
@@ -104,6 +117,9 @@ class noerdweb {
         hasrestart => true,
         hasstatus  => true,
         subscribe  => [
+            File["nginx_copy_certificates"],
+            File["nginx_copy_additional_sites"],
+
             File["/etc/nginx/nginx.conf"],
 
             File["/etc/nginx/sites/wildcard.conf"],

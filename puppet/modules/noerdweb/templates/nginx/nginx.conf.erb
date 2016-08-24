@@ -79,6 +79,8 @@ http {
 
     include conf.d/upstreams.conf;
 
+    include sites.d/*.conf;
+
     include sites/wildcard.conf;
     include sites/wildcard-sf2.conf;
 }

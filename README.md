@@ -110,6 +110,10 @@ This is another virtual host on the list as the default rewrite with which you'r
 
 Your project will be available at: `http://project.local-sf2.noerdisch.net`
 
+#### Additional Sites
+
+If you should have more specific requirements to your nginx configuration (or one of the wildcard configs does not match your needs) you can place your configuration in `_nginx-sites.d` within this directory. Puppet will copy those files on `vagrant provision` and include them into nginx main configuration file (make sure your configuration uses suffix `.conf` to be included).
+
 ## Note on MySQL
 
 The stack comes with a MySQL database server installed on the host `phoenix-db`. Instead of typing some IP or long hostnames in your application you can use the shorthandle `db` as database host from within your applications. The Hostname `db` does resolve to `192.168.50.51`.

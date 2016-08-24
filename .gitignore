@@ -6,3 +6,6 @@ _vHosts/*
 
 _transfer/*
 !_transfer/.gitkeep
+
+_nginx-sites.d/*
+!_nginx-sites.d/.gitkeep
