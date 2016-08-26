@@ -32,40 +32,40 @@ class noerdphp {
         ]
     }
 
-    $versions = [
-        "5.5",
-        "5.6",
-        "7.0",
-        "7.1"
-    ]
+    $versions = {
+        "5.5" => "55",
+        "5.6" => "56",
+        "7.0" => "70",
+        "7.1" => "71"
+    }
 
-    $defaultVersion = "5.6"
+    $default_version = "5.6"
 
-    each($versions) |$version| {
+    each($versions) |$version_package, $version_symlink| {
 
         $install_service_version_packages = [
-            "php$version-fpm",
-            "php$version-cli",
-            "php$version-dev",
+            "php${version_package}-fpm",
+            "php${version_package}-cli",
+            "php${version_package}-dev",
         ]
 
         $install_version_packages = [
-            "php$version-curl",
-            "php$version-gd",
-            "php$version-intl",
-            "php$version-ldap",
-            "php$version-readline",
-            "php$version-mysql",
-            "php$version-pgsql",
-            "php$version-xmlrpc",
-            "php$version-xsl",
-            "php$version-json",
-            "php$version-bz2",
-            "php$version-mbstring",
-            "php$version-mcrypt",
-            "php$version-soap",
-            "php$version-xml",
-            "php$version-zip"
+            "php${version_package}-curl",
+            "php${version_package}-gd",
+            "php${version_package}-intl",
+            "php${version_package}-ldap",
+            "php${version_package}-readline",
+            "php${version_package}-mysql",
+            "php${version_package}-pgsql",
+            "php${version_package}-xmlrpc",
+            "php${version_package}-xsl",
+            "php${version_package}-json",
+            "php${version_package}-bz2",
+            "php${version_package}-mbstring",
+            "php${version_package}-mcrypt",
+            "php${version_package}-soap",
+            "php${version_package}-xml",
+            "php${version_package}-zip"
         ]
 
         package { $install_service_version_packages:
@@ -83,50 +83,56 @@ class noerdphp {
                 Exec["aptget_update_after_ppa"],
                 Package[$install_service_version_packages],
             ],
-            notify     => Service["php$version-fpm"]
+            notify     => Service["php${version_package}-fpm"]
         }
 
-        file { "/etc/php/$version/fpm/pool.d/www.conf":
+        file { "/etc/php/${version_package}/fpm/pool.d/www.conf":
             ensure     => file,
-            content    => template("noerdphp/php-$version/www.conf.erb"),
+            content    => template("noerdphp/php-${version_package}/www.conf.erb"),
             require    => [
-                Package["php$version-fpm"],
+                Package["php${version_package}-fpm"],
             ]
         }
 
         $phpini_common = [
-            "/etc/php/$version/fpm/conf.d/zz-noerdisch-common.ini",
-            "/etc/php/$version/cli/conf.d/zz-noerdisch-common.ini"
+            "/etc/php/${version_package}/fpm/conf.d/zz-noerdisch-common.ini",
+            "/etc/php/${version_package}/cli/conf.d/zz-noerdisch-common.ini"
         ]
 
         file { $phpini_common:
             ensure     => file,
             content    => template("noerdphp/noerdisch-common.ini.erb"),
             require    => [
-                Package["php$version-fpm"]
+                Package["php${version_package}-fpm"]
             ]
         }
 
         $phpini_version = [
-            "/etc/php/$version/fpm/conf.d/zzz-noerdisch-$version.ini",
-            "/etc/php/$version/cli/conf.d/zzz-noerdisch-$version.ini"
+            "/etc/php/${version_package}/fpm/conf.d/zzz-noerdisch-${version_package}.ini",
+            "/etc/php/${version_package}/cli/conf.d/zzz-noerdisch-${version_package}.ini"
         ]
 
         file { $phpini_version:
             ensure     => file,
-            content    => template("noerdphp/php-$version/version.ini.erb"),
+            content    => template("noerdphp/php-${version_package}/version.ini.erb"),
             require    => [
-                Package["php$version-fpm"]
+                Package["php${version_package}-fpm"]
             ]
         }
 
-        service { "php$version-fpm":
+        file { "/usr/local/bin/php${version_symlink}":
+            ensure     => link,
+            target     => "/usr/bin/php${version_package}",
+            require    => Package["php${version_package}-cli"]
+        }
+
+        service { "php${version_package}-fpm":
             ensure     => running,
             enable     => true,
             hasrestart => true,
             hasstatus  => true,
             require    => [
-                Package["php$version-fpm"]
+                Package["php${version_package}-fpm"]
             ],
             subscribe  => [
                 Package[$install_common_php_packages],
@@ -134,16 +140,16 @@ class noerdphp {
                 Package[$install_version_packages],
                 Package[$install_service_version_packages],
 
-                File["/etc/php/$version/fpm/pool.d/www.conf"],
-                File["/etc/php/$version/fpm/conf.d/zz-noerdisch-common.ini"],
-                File["/etc/php/$version/fpm/conf.d/zzz-noerdisch-$version.ini"]
+                File["/etc/php/${version_package}/fpm/pool.d/www.conf"],
+                File["/etc/php/${version_package}/fpm/conf.d/zz-noerdisch-common.ini"],
+                File["/etc/php/${version_package}/fpm/conf.d/zzz-noerdisch-${version_package}.ini"]
             ]
         }
     }
 
     file { "/usr/local/bin/php":
         ensure     => link,
-        target     => "/usr/bin/php$defaultVersion",
-        require    => Package["php$defaultVersion-cli"]
+        target     => "/usr/bin/php${default_version}",
+        require    => Package["php${default_version}-cli"]
     }
 }
