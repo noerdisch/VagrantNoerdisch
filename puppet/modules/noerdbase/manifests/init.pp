@@ -148,6 +148,12 @@ class noerdbase {
         content         => template("noerdbase/motd.erb")
     }
 
+    file { "/usr/local/bin/node":
+        ensure          => 'link',
+        target          => '/usr/bin/nodejs',
+        require         => Package['nodejs']
+    }
+
     file { "/etc/hosts":
         ensure          => file,
         content         => template("noerdbase/hosts.erb")
