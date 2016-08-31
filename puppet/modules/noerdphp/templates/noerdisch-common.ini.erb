@@ -28,7 +28,7 @@ error_reporting        = E_ALL | E_STRICT
 display_errors         = On
 display_startup_errors = On
 log_errors             = On
-error_log              = /var/log/php<%= scope.lookupvar('version') %>-error.log
+error_log              = /var/log/php/php<%= scope.lookupvar('version_package') %>-error.log
 
 mysql.default_host     = <% @db_host %>
 mysql.default_port     = 3306

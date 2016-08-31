@@ -13,6 +13,12 @@ class noerdphp {
         refreshonly => true
     }
 
+    file { "/var/log/php":
+        ensure     => directory,
+        owner      => "vagrant",
+        group      => "vagrant"
+    }
+
     $install_common_php_packages = [
         "php-apcu",
         "php-ssh2",
