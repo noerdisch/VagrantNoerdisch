@@ -109,7 +109,8 @@ class noerdphp {
             ensure     => file,
             content    => template("noerdphp/noerdisch-common.ini.erb"),
             require    => [
-                Package["php${version_package}-fpm"]
+                Package["php${version_package}-fpm"],
+                File["/var/log/php"]
             ]
         }
 
