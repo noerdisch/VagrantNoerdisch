@@ -19,8 +19,11 @@ class noerdproxy {
         ports              => '3306',
         mode               => 'tcp',
         options            => {
-            option => [
-                'mysql-check user haproxy'
+            'timeout client' => '30m',
+            'timeout server' => '30m',
+            'option'         => [
+                'mysql-check user haproxy',
+                'tcpka',
             ]
         }
     }
