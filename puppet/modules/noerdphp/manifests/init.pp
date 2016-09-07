@@ -70,6 +70,7 @@ class noerdphp {
             "php${version_package}-mbstring",
             "php${version_package}-mcrypt",
             "php${version_package}-soap",
+            "php${version_package}-sqlite3",
             "php${version_package}-xml",
             "php${version_package}-zip"
         ]
