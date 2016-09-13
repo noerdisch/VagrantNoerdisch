@@ -13,7 +13,12 @@ server {
 
     access_log /var/log/nginx/access.$project.log;
 
-    root /var/www/$project/Web;
+    set $docroot_part "Web";
+    if ( -d /var/www/$project/html) {
+        set $docroot_part "html";
+    }
+
+    root /var/www/$project/$docroot_part;
 
     index index.php index.html;
 
