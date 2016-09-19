@@ -62,6 +62,8 @@ Please run a single `vagrant reload --provision` after initial setup. This is du
 | Elasticsearch     | elasticsearch.local.noerdisch.net | *none*                       | 192.168.50.50:9200 | HTTP     |
 | MySQL             | db.local.noerdisch.net            | *none*                       | 192.168.50.51:3306 | MySQL    |
 
+As we've seen the majority of our projects use `html` as document root, nginx will prefer `html` over `Web` as document root. If however there is no `html` folder in place nginx will fall back to `Web` as document root to provide backwards compatibility.
+
 ### PHP Versions
 
 Based on the awesome [PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/+index) of [Ondřej Surý](https://deb.sury.org/#donate) this box does provide a couple of different PHP versions.
@@ -131,7 +133,7 @@ You can use the database user *vagrant* to access the MySQL server from your hos
 
 ## Note on Elasticsearch
 
-The box comes with 2 Elasticsearch nodes running as a cluster (Clustername is `noerdlastic_2x_local`, the version is pinned to 2.3.5 which marks the current stable 2.x Release).
+The box comes with 2 Elasticsearch nodes running as a cluster (Clustername is `noerdlastic_2x_local`, the version is pinned to 2.4.0 which marks the current stable 2.x Release).
 
 To access Plugins (see below for a list of installed ones) or use Elasticsearch from your computer in other ways there's a proxy-configuration on haproxy in place which makes you able to use the host http://elasticsearch.local.noerdisch.net:9200.
 
