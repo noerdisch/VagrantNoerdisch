@@ -71,11 +71,6 @@ server {
         try_files $uri $uri/ @catchInstallTool;
     }
 
-    location ~ "^/_Resources/Persistent/" {
-        rewrite "(.{40})/.+\.(.+)" /_Resources/Persistent/$1.$2 break;
-        rewrite "([a-z0-9]+/(.+/)?[a-f0-9]{40})/.+\.(.+)" /_Resources/Persistent/$1.$2 break;
-    }
-
     add_header "X-Noerd-Config" "wildcard";
     add_header "X-Noerd-Project" $project;
     add_header "X-Noerd-Project-Root" $project_root;
