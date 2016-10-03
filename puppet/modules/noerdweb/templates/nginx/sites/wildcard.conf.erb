@@ -45,7 +45,7 @@ server {
     }
 
     location @catchInstallTool {
-        add_header "X-Status-Cause" "config";
+        add_header "X-Status-Cause" "config" always;
         return 302 /typo3/sysext/install/Start/Install.php;
     }
 
@@ -58,12 +58,12 @@ server {
     }
 
     location ~* (^|/)\. {
-        add_header "X-Status-Cause" "config";
+        add_header "X-Status-Cause" "config" always;
         return 403;
     }
 
     location ~* (\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$ {
-        add_header "X-Status-Cause" "config";
+        add_header "X-Status-Cause" "config" always;
         return 403;
     }
 
@@ -71,12 +71,13 @@ server {
         try_files $uri $uri/ @catchInstallTool;
     }
 
-    add_header "X-Noerd-Config" "wildcard";
-    add_header "X-Noerd-Project" $project;
-    add_header "X-Noerd-Project-Root" $project_root;
-    add_header "X-Noerd-DomHost" $domhost;
-    add_header "X-Noerd-Expected-Engine" $eengine;
-    add_header "X-Noerd-Evaluated-Engine" $engine;
+    add_header "X-Noerd-Config" "wildcard" always;
+    add_header "X-Noerd-Project" $project always;
+    add_header "X-Noerd-Project-Root" $project_root always;
+    add_header "X-Noerd-DomHost" $domhost always;
+    add_header "X-Noerd-Expected-Engine" $eengine always;
+    add_header "X-Noerd-Evaluated-Engine" $engine always;
+    add_header "X-Noerd-Pinned-Engine" $pinned always;
 
     location ~ \.php$ {
         try_files $uri /index.php$is_args$args;
