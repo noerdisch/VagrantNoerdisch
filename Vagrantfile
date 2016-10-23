@@ -7,10 +7,28 @@ BOX_CHECKSUM = "f24966fd9d89401eb4b65b9ba99c91588c62a5d242ca63588266d27307ddb226
 HOST_DB = "192.168.50.51"
 HOST_WEB = "192.168.50.50"
 
-CPUS = `sysctl -n hw.physicalcpu`.to_i
-MEMORY = `sysctl -n hw.memsize`.to_i / 1024 / 1024 / 8
+# Get host os type
+host = RbConfig::CONFIG['host_os']
 
-if MEMORY.to_i < 1024
+# Give VM 1/4 system memory & access to all cpu cores on the host
+if host =~ /darwin/
+    cpus = `sysctl -n hw.physicalcpu`.to_i
+    # sysctl returns Bytes and we need to convert to MB
+    mem = `sysctl -n hw.memsize`.to_i / 1024 / 1024 / 8
+elsif host =~ /linux/
+    cpus = `nproc`.to_i
+    # meminfo shows KB and we need to convert to MB
+    mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i / 1024 / 8
+else # sorry other folks, I can't help you
+    cpus = 1
+    mem = 1024
+end
+
+MEMORY = mem.to_i
+CPUS = cpus.to_i
+
+# Enforce lower bound of memory to 1024 MB
+if MEMORY < 1024
     MEMORY = 1024
 end
 

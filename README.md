@@ -24,8 +24,8 @@ These boxes are named after [Phoenix](https://en.wikipedia.org/wiki/Phoenix_%28s
 #### Supported host operating systems:
 
 * Mac OS X 10.11.x
-* Linux (CentOS 7.x / Ubuntu 16.04 LTS) is going to be added "soon"
-* **never** to be added: any Windows Version
+* Linux (Ubuntu 16.04 LTS, other Distributions to be tested)
+* **never** to be added: any Windows Version (even though there are reports it works, it'll never going to be official)
 
 Any other combination _might_ work, but is neither tested nor supported by [nœrdisch - digital solutions](https://www.noerdisch.de/). The repository is provided as-is without warranty.
 
