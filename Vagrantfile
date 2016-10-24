@@ -41,8 +41,16 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "phoenix-web", primary: true do |box|
         box.vm.network "private_network", ip: HOST_WEB
-        box.vm.synced_folder "_vHosts", "/var/www", type: "nfs"
-        box.vm.synced_folder "_transfer", "/opt/transfer", type: "nfs"
+        box.vm.synced_folder "_vHosts", "/var/www",
+            :nfs => true,
+            :nfs_version => 3,
+            :nfs_udp => false,
+            :mount_options => [ 'rsize=32768', 'wsize=32768', 'vers=3', 'tcp', 'fsc', 'intr', 'nolock', 'noatime', 'nodiratime', 'retrans=3' ]
+        box.vm.synced_folder "_transfer", "/opt/transfer",
+            :nfs => true,
+            :nfs_version => 3,
+            :nfs_udp => false,
+            :mount_options => [ 'rsize=32768', 'wsize=32768', 'vers=3', 'tcp', 'fsc', 'intr', 'nolock', 'noatime', 'nodiratime', 'retrans=3' ]
         box.vm.hostname = "phoenix-web"
         box.vm.provider "virtualbox" do |vb|
             vb.name      = "Noerdisch Development Stack (OpenSource Web)"
@@ -62,7 +70,11 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "phoenix-db" do |box|
         box.vm.network "private_network", ip: HOST_DB
-        box.vm.synced_folder "_transfer", "/opt/transfer", type: "nfs"
+        box.vm.synced_folder "_transfer", "/opt/transfer",
+            :nfs => true,
+            :nfs_version => 3,
+            :nfs_udp => false,
+            :mount_options => [ 'rsize=32768', 'wsize=32768', 'vers=3', 'tcp', 'fsc', 'intr', 'nolock', 'noatime', 'nodiratime','retrans=3' ]
         box.vm.hostname = "phoenix-db"
         box.vm.provider "virtualbox" do |vb|
             vb.name      = "Noerdisch Development Stack (OpenSource DB)"

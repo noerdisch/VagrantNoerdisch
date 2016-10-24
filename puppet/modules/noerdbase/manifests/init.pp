@@ -18,6 +18,7 @@ class noerdbase {
         "apparmor",
         "symlinks",
         "memcached",
+        "cachefilesd",
         "libyaml-dev",
         "redis-server",
         "docker-engine",
@@ -148,6 +149,12 @@ class noerdbase {
         content         => template("noerdbase/motd.erb")
     }
 
+    file { "/etc/default/cachefilesd":
+        ensure          => file,
+        content         => template("noerdbase/cachefilesd.erb"),
+        require         => Package['cachefilesd']
+    }
+
     file { "/usr/local/bin/node":
         ensure          => 'link',
         target          => '/usr/bin/nodejs',
@@ -192,6 +199,15 @@ class noerdbase {
         hasstatus  => true,
         subscribe  => [
             File["/etc/dnsmasq.conf"]
+        ]
+    }
+
+    service { "cachefilesd":
+        ensure     => running,
+        hasrestart => true,
+        hasstatus  => true,
+        subscribe  => [
+            File["/etc/default/cachefilesd"]
         ]
     }
 }
