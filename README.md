@@ -21,6 +21,8 @@ These boxes are named after [Phoenix](https://en.wikipedia.org/wiki/Phoenix_%28s
     * Virtualbox Additions Plugin: `vagrant plugin install vagrant-vbguest`
 * [Virtualbox](http://www.virtualbox.org/) 5.0.x / 5.1.x
 
+Even though any of the mentioned versions _should be_ working the following versions seem to be the most stable combination: [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/1.8.4/) & [Virtualbox 5.0.28](https://www.virtualbox.org/wiki/Download_Old_Builds_5_0)
+
 #### Supported host operating systems:
 
 * Mac OS X 10.11.x
