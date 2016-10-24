@@ -18,6 +18,8 @@ class noerdbase {
         "apparmor",
         "symlinks",
         "memcached",
+        "python2.7",
+        "virtualenv",
         "cachefilesd",
         "libyaml-dev",
         "redis-server",
