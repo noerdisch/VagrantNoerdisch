@@ -23,6 +23,7 @@ class noerdbase {
         "cachefilesd",
         "libyaml-dev",
         "redis-server",
+        "python2.7-dev",
         "docker-engine",
         "openjdk-8-jre",
         "openjdk-8-jdk",
