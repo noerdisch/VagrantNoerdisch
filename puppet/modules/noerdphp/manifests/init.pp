@@ -7,9 +7,29 @@ class noerdphp {
         notify     => Exec["aptget_update_after_ppa"],
     }
 
+    apt::source { 'blackfireio':
+        comment         => 'blackfire.io Vendor Packages',
+        location        => 'http://packages.blackfire.io/debian',
+        release         => 'any',
+        repos           => 'main',
+        pin             => '1000',
+        key             => {
+            id            => '418A7F2FB0E1E6E7EABF6FE8C2E73424D59097AB',
+            source        => 'https://packagecloud.io/gpg.key',
+        },
+        include         => {
+            src           => false,
+            deb           => true,
+        },
+        notify          => Exec["aptget_update_after_ppa"]
+    }
+
     exec { "aptget_update_after_ppa":
         command    => "apt-get update",
-        require    => Apt::Ppa["ppa:ondrej/php"],
+        require    => [
+            Apt::Ppa["ppa:ondrej/php"],
+            Apt::Source["blackfireio"],
+        ],
         refreshonly => true
     }
 
@@ -28,12 +48,16 @@ class noerdphp {
         "php-xdebug",
         "php-imagick",
         "php-memcache",
+
+        "blackfire-php",
+        "blackfire-agent",
     ]
 
     package { $install_common_php_packages:
         ensure     => "latest",
         require    => [
             Apt::Ppa["ppa:ondrej/php"],
+            Apt::Source["blackfireio"],
             Exec["aptget_update_after_ppa"]
         ]
     }
