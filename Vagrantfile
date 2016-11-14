@@ -11,6 +11,22 @@ BOX_CHECKSUM = "f24966fd9d89401eb4b65b9ba99c91588c62a5d242ca63588266d27307ddb226
 HOST_DB = "192.168.50.51"
 HOST_WEB = "192.168.50.50"
 
+# easy script so that we can check and install needed vagrant plugins
+# Installed ones:
+# vagrant-vbguest : necessary for this config
+# vagrant-cachier: 
+required_plugins = %w(vagrant-vbguest)
+
+plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+if not plugins_to_install.empty?
+  puts "Installing plugins: #{plugins_to_install.join(' ')}"
+  if system "vagrant plugin install #{plugins_to_install.join(' ')}"
+    exec "vagrant #{ARGV.join(' ')}"
+  else
+    abort "Installation of one or more plugins has failed. Aborting."
+  end
+end
+
 # Get host os type
 host = RbConfig::CONFIG['host_os']
 
