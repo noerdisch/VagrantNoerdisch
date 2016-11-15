@@ -1,6 +1,8 @@
 .idea
 .vagrant
 
+puppet/dist/
+
 _vHosts/*
 !_vHosts/.gitkeep
 

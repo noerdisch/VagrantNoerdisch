@@ -1,6 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# REQUIRE Vagrant 1.8.4
+# Anything else turned out to be not working.
+Vagrant.require_version "= 1.8.4"
+
 BOX_VERSION = "20160809.1"
 BOX_CHECKSUM = "f24966fd9d89401eb4b65b9ba99c91588c62a5d242ca63588266d27307ddb226"
 
@@ -45,12 +49,12 @@ Vagrant.configure("2") do |config|
             :nfs => true,
             :nfs_version => 3,
             :nfs_udp => false,
-            :mount_options => [ 'rsize=32768', 'wsize=32768', 'vers=3', 'tcp', 'fsc', 'intr', 'nolock', 'noatime', 'nodiratime', 'retrans=3' ]
+            :mount_options => [ 'rsize=32768', 'wsize=32768', 'vers=3', 'tcp', 'intr', 'nolock', 'noatime', 'nodiratime', 'retrans=3' ]
         box.vm.synced_folder "_transfer", "/opt/transfer",
             :nfs => true,
             :nfs_version => 3,
             :nfs_udp => false,
-            :mount_options => [ 'rsize=32768', 'wsize=32768', 'vers=3', 'tcp', 'fsc', 'intr', 'nolock', 'noatime', 'nodiratime', 'retrans=3' ]
+            :mount_options => [ 'rsize=32768', 'wsize=32768', 'vers=3', 'tcp', 'intr', 'nolock', 'noatime', 'nodiratime', 'retrans=3' ]
         box.vm.hostname = "phoenix-web"
         box.vm.provider "virtualbox" do |vb|
             vb.name      = "Noerdisch Development Stack (OpenSource Web)"
@@ -90,8 +94,6 @@ Vagrant.configure("2") do |config|
 
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
-    config.vm.provision :shell, :inline => "cp /vagrant/puppet/Puppetfile /etc/puppet"
-    config.vm.provision :shell, :inline => "cd /etc/puppet && rm -rf /etc/puppet/modules && librarian-puppet install"
     config.vm.provision :shell, :inline => "while $(fuser /var/lib/dpkg/lock >/dev/null 2>&1) ; do echo 'waiting for dpkg lock release ...' ; sleep 1 ; done && ( sync; sync; sync; sleep 1; apt-get -qy update; )"
 
     config.vm.provision "puppet" do |puppet|
@@ -103,7 +105,7 @@ Vagrant.configure("2") do |config|
         }
 
         puppet.manifests_path    = "puppet/manifests"
-        puppet.module_path       = "puppet/modules"
+        puppet.module_path       = [ "puppet/modules-forge", "puppet/modules" ]
         puppet.hiera_config_path = "puppet/hiera.yaml"
         puppet.manifest_file     = "noerdsite.pp"
         puppet.options           = "--environment=local --parser=future"

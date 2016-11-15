@@ -1,5 +1,10 @@
 class noerdbase {
-    include apt
+    class { "apt":
+        purge => {
+            'sources.list'   => true,
+            'sources.list.d' => true
+        }
+    }
 
     $install_packages = [
         "vim",
@@ -20,7 +25,6 @@ class noerdbase {
         "memcached",
         "python2.7",
         "virtualenv",
-        "cachefilesd",
         "libyaml-dev",
         "redis-server",
         "python2.7-dev",
@@ -94,6 +98,33 @@ class noerdbase {
         creates         => "/usr/local/bin/mhsendmail"
     }
 
+    apt::source { "mirrors.ubuntu.com-${lsbdistcodename}":
+        location        => 'mirror://mirrors.ubuntu.com/mirrors.txt',
+        repos           => 'main universe multiverse restricted',
+        notify          => Exec['apt-update']
+    }
+
+    apt::source { "mirrors.ubuntu.com-${lsbdistcodename}-security":
+        location        => 'mirror://mirrors.ubuntu.com/mirrors.txt',
+        repos           => 'main universe multiverse restricted',
+        release         => "${lsbdistcodename}-security",
+        notify          => Exec['apt-update']
+    }
+
+    apt::source { "mirrors.ubuntu.com-${lsbdistcodename}-updates":
+        location        => 'mirror://mirrors.ubuntu.com/mirrors.txt',
+        repos           => 'main universe multiverse restricted',
+        release         => "${lsbdistcodename}-updates",
+        notify          => Exec['apt-update']
+    }
+
+    apt::source { "mirrors.ubuntu.com-${lsbdistcodename}-backports":
+        location        => 'mirror://mirrors.ubuntu.com/mirrors.txt',
+        repos           => 'main universe multiverse restricted',
+        release         => "${lsbdistcodename}-backports",
+        notify          => Exec['apt-update']
+    }
+
     apt::source { 'erlang':
         comment         => 'Erlang/OTP Vendor Packages',
         location        => 'https://packages.erlang-solutions.com/ubuntu',
@@ -119,7 +150,7 @@ class noerdbase {
         pin             => '1000',
         key             => {
             id            => '58118E89F3A912897C070ADBF76221572C52609D',
-            server        => 'hkp://p80.pool.sks-keyservers.net:80',
+            source        => 'https://apt.dockerproject.org/gpg',
         },
         include         => {
             src           => false,
@@ -133,8 +164,16 @@ class noerdbase {
         require         => [
             Exec["apt-update"],
             Apt::Source["docker"],
-            Apt::Source["erlang"]
+            Apt::Source["erlang"],
+            Apt::Source["mirrors.ubuntu.com-${lsbdistcodename}"],
+            Apt::Source["mirrors.ubuntu.com-${lsbdistcodename}-security"],
+            Apt::Source["mirrors.ubuntu.com-${lsbdistcodename}-updates"],
+            Apt::Source["mirrors.ubuntu.com-${lsbdistcodename}-backports"]
         ]
+    }
+
+    package { [ "cachefilesd" ]:
+        ensure          => "absent",
     }
 
     package { $install_rubygems:
@@ -150,12 +189,6 @@ class noerdbase {
     file { "/etc/motd":
         ensure          => file,
         content         => template("noerdbase/motd.erb")
-    }
-
-    file { "/etc/default/cachefilesd":
-        ensure          => file,
-        content         => template("noerdbase/cachefilesd.erb"),
-        require         => Package['cachefilesd']
     }
 
     file { "/usr/local/bin/node":
@@ -202,15 +235,6 @@ class noerdbase {
         hasstatus  => true,
         subscribe  => [
             File["/etc/dnsmasq.conf"]
-        ]
-    }
-
-    service { "cachefilesd":
-        ensure     => running,
-        hasrestart => true,
-        hasstatus  => true,
-        subscribe  => [
-            File["/etc/default/cachefilesd"]
         ]
     }
 }

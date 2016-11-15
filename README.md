@@ -14,14 +14,14 @@ These boxes are named after [Phoenix](https://en.wikipedia.org/wiki/Phoenix_%28s
 
 ## Get it up & running
 
-### Make sure you run at least
+### Make sure you run
 
 * a Git client
-* [Vagrant](http://vagrantup.com/) 1.8.3 (or later due to [GH-7159](https://github.com/mitchellh/vagrant/pull/7159))
+* [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/1.8.4/)
     * Virtualbox Additions Plugin: `vagrant plugin install vagrant-vbguest`
-* [Virtualbox](http://www.virtualbox.org/) 5.0.x / 5.1.x
+* [Virtualbox 5.0.x](https://www.virtualbox.org/wiki/Download_Old_Builds_5_0)
 
-Even though any of the mentioned versions _should be_ working the following versions seem to be the most stable combination: [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/1.8.4/) & [Virtualbox 5.0.28](https://www.virtualbox.org/wiki/Download_Old_Builds_5_0)
+The combination of Vagrant & Virtualbox is critical. There are way to many issues with anything else.
 
 #### Supported host operating systems:
 
@@ -176,3 +176,5 @@ If you're interested get in touch with us: [nœrdisch - digital solutions](https
 ## License
 
 This Vagrant box is licensed under the permissive [MIT license](http://opensource.org/licenses/MIT) - have fun with it!
+
+Any 3rd-Party Puppet modules distributed with this box (`puppet/modules-forge`) are subject to their corresponding LICENSE.
