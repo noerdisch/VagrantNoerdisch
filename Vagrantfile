@@ -14,7 +14,6 @@ HOST_WEB = "192.168.50.50"
 # easy script so that we can check and install needed vagrant plugins
 # Installed ones:
 # vagrant-vbguest : necessary for this config
-# vagrant-cachier: 
 required_plugins = %w(vagrant-vbguest)
 
 plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }

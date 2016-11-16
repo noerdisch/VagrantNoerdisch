@@ -18,7 +18,7 @@ These boxes are named after [Phoenix](https://en.wikipedia.org/wiki/Phoenix_%28s
 
 * a Git client
 * [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/1.8.4/)
-    * Virtualbox Additions Plugin: `vagrant plugin install vagrant-vbguest`
+* Vagrant Virtualbox Additions Plugin (installed during initial setup)
 * [Virtualbox 5.0.x](https://www.virtualbox.org/wiki/Download_Old_Builds_5_0)
 
 The combination of Vagrant & Virtualbox is critical. There are way to many issues with anything else.
@@ -40,10 +40,6 @@ Clone this repository
 Change to the cloned repository
 
     cd ~/VagrantNoerdisch
-
-Install Plugin vbguest which keeps your boxes Guest Additions in sync with your Virtualbox version:
-
-    vagrant plugin install vagrant-vbguest
 
 Boot up the virtual box:
 
@@ -81,7 +77,7 @@ The default engine used is PHP 5.6. To test your application with some different
 
 Otherwise you can place a file in `/var/www/$project` to pin a project to a specific version of PHP (see Dotfile-Column above). That file may be empty, as it's checked for existance only. So to pin a project (e.g. `test`) to PHP 5.5 run the following command on the web-host (`vagrant ssh phoenix-web` => `touch /var/www/test/.php55`). This will make nginx always pass requests to PHP 5.5.
 
-PHP 7.1.0 is available as aplha-3 as per time of writing this. So expect that things might break while using this engine. There might not even be all PHP modules be in place for PHP 7.1 yet.
+PHP 7.1.0 is available as rc-<something> as per time of writing this. So expect that things might break while using this engine. There might not even be all PHP modules be in place for PHP 7.1 yet.
 
 When working on CLI you should specify your PHP Version in detail (e.g. `php5.5 /my/awesome/script.php`) to prevent falling back to some default (which is PHP 5.6).
 
