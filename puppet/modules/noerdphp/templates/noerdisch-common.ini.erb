@@ -53,6 +53,8 @@ opcache.load_comments              = 1
 opcache.consistency_checks         = 10
 
 ; XDebug settings
+xdebug.cli_color                   = 1
+
 xdebug.idekey                      = PhpStorm
 xdebug.scream                      = 0
 xdebug.remote_mode                 = req
@@ -67,3 +69,8 @@ xdebug.show_exception_trace        = 0
 xdebug.var_display_max_data        = 1024
 xdebug.var_display_max_depth       = 5
 xdebug.remote_cookie_expire_time   = 3600
+
+xdebug.profiler_append             = 0
+xdebug.profiler_enable_trigger     = 1
+xdebug.profiler_output_dir         = /opt/transfer
+xdebug.profiler_output_name        = cachegrind.%u.%p.out
