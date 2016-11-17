@@ -18,6 +18,7 @@ class noerdbase {
         "nodejs",
         "golang",
         "erlang",
+        "telnet",
         "dnsmasq",
         "ruby-dev",
         "apparmor",
