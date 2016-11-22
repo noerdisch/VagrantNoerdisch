@@ -42,7 +42,13 @@ class noerdlastic {
         }
     }
 
-    Elasticsearch::Plugin { instances => ['noerdsearch01', 'noerdsearch02'] }
+    Elasticsearch::Plugin {
+        instances => [
+            'noerdsearch01', 'noerdsearch02'
+        ]
+    }
     elasticsearch::plugin { 'mobz/elasticsearch-head': }
     elasticsearch::plugin { 'lmenezes/elasticsearch-kopf/2.0': }
+    elasticsearch::plugin { 'mapper-attachments': }
+    elasticsearch::plugin { 'delete-by-query': }
 }
