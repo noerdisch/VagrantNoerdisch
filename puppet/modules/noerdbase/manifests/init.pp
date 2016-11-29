@@ -40,7 +40,8 @@ class noerdbase {
 
     $install_rubygems = [
         "jsonpp",
-        "compass"
+        "compass",
+        "bundler",
     ]
 
     sysctl { 'vm.swappiness':                 value => '2' }
