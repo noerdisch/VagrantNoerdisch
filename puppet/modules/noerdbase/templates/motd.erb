@@ -1,10 +1,13 @@
 
-#################################################
-# <%= @hostname %>.local.noerdisch.net
+#############################################################################
+# <%= @fqdn %>
+# Environment: <%= @environment.capitalize %>
 #
-# OS......: <%= @operatingsystem %> <%= @operatingsystemrelease %> <%= @hardwaremodel %>
-# Kernel..: <%= @kernelrelease %>
-# Puppet..: <%= @puppetversion %>
-# Memory..: <%= @memorysize %>
-# CPUs....: <%= @processorcount %>
-#################################################
+# OS............: <%= @operatingsystem %> <%= @operatingsystemrelease %> <%= @hardwaremodel %>
+# Kernel........: <%= @kernelrelease %>
+# Puppet/Facter.: <%= @puppetversion %> / <%= @facterversion %>
+# Memory........: <%= @memorysize %>
+# CPUs..........: <%= @processorcount %>
+# CPU Model.....: <%= @processor0 %>
+# IPv4..........: <%= @ipaddress_eth0 %> / <%= @ipaddress_eth1 %>
+#############################################################################
