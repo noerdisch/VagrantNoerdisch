@@ -53,12 +53,15 @@ Please run a single `vagrant reload --provision` after initial setup. This is du
 
 ## virtual Hosts / Services
 
-| Service           | Hostname                          | Document Root                | IP/Port            | Protocol |
-|-------------------|-----------------------------------|------------------------------|--------------------|----------|
-| Wildcard          | *project*.local.noerdisch.net     | `/var/www/$project/Web/`     | 192.168.50.50:80   | HTTP     |
-| Symfony2 Wildcard | *project*.local-sf2.noerdisch.net | `/var/www/sf2/$project/web/` | 192.168.50.50:80   | HTTP     |
-| Elasticsearch     | elasticsearch.local.noerdisch.net | *none*                       | 192.168.50.50:9200 | HTTP     |
-| MySQL             | db.local.noerdisch.net            | *none*                       | 192.168.50.51:3306 | MySQL    |
+| Service           | URL                               | Document Root                | IP/Port             | Protocol |
+|-------------------|-----------------------------------|------------------------------|---------------------|----------|
+| Wildcard          | *project*.local.noerdisch.net     | `/var/www/$project/Web/`     | 192.168.50.50:80    | HTTP     |
+| Symfony2 Wildcard | *project*.local-sf2.noerdisch.net | `/var/www/sf2/$project/web/` | 192.168.50.50:80    | HTTP     |
+| Haproxy Stats     | local.noerdisch.net:1936/haproxy  | *none*                       | 192.168.50.50:1936  | HTTP     |
+| MailHog           | local.noerdisch.net:8025          | *none*                       | 192.168.50.50:8025  | HTTP     |
+| Elasticsearch     | local.noerdisch.net:9200          | *none*                       | 192.168.50.50:9200  | HTTP     |
+| Portainer         | local.noerdisch.net:12468         | *none*                       | 192.168.50.50:12468 | HTTP     |
+| MySQL             | db.local.noerdisch.net            | *none*                       | 192.168.50.51:3306  | MySQL    |
 
 As we've seen the majority of our projects use `html` as document root, nginx will prefer `html` over `Web` as document root. If however there is no `html` folder in place nginx will fall back to `Web` as document root to provide backwards compatibility.
 
@@ -68,16 +71,16 @@ Based on the awesome [PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/+in
 
 The default engine used is PHP 5.6. To test your application with some different Version just prefix the project URL with one of the following values:
 
-| PHP Version   | Prefix   | Dotfile  |
-|---------------|----------|----------|
-| 5.5           | `php55.` | `.php55` |
-| 5.6 (default) | `php56.` | `.php56` |
-| 7.0           | `php70.` | `.php70` |
-| 7.1           | `php71.` | `.php71` |
+| PHP Version   | Prefix   | Dotfile  | Order |
+|---------------|----------|----------|-------|
+| 5.5           | `php55.` | `.php55` | #1    |
+| 5.6 (default) | `php56.` | `.php56` | #2    |
+| 7.0           | `php70.` | `.php70` | #3    |
+| 7.1           | `php71.` | `.php71` | #4    |
 
 Otherwise you can place a file in `/var/www/$project` to pin a project to a specific version of PHP (see Dotfile-Column above). That file may be empty, as it's checked for existance only. So to pin a project (e.g. `test`) to PHP 5.5 run the following command on the web-host (`vagrant ssh phoenix-web` => `touch /var/www/test/.php55`). This will make nginx always pass requests to PHP 5.5.
 
-PHP 7.1.0 is available as rc-<something> as per time of writing this. So expect that things might break while using this engine. There might not even be all PHP modules be in place for PHP 7.1 yet.
+If you place multiple dotfiles in your project directory the engine used is evaluated in the order shown above.
 
 When working on CLI you should specify your PHP Version in detail (e.g. `php5.5 /my/awesome/script.php`) to prevent falling back to some default (which is PHP 5.6).
 
