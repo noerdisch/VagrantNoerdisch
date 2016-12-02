@@ -83,7 +83,8 @@ Vagrant.configure("2") do |config|
         end
 
         box.vm.provision "docker" do |docker|
-            docker.run "mailhog", image: "mailhog/mailhog", daemonize: true, args: "--publish 127.0.0.1:1025:1025 --publish 0.0.0.0:8025:8025 --env MH_HOSTNAME=mail.local.noerdisch.net"
+            docker.run "mailhog", image: "mailhog/mailhog:latest", daemonize: true, args: "--publish 127.0.0.1:1025:1025 --publish 0.0.0.0:8025:8025 --env MH_HOSTNAME=mail.local.noerdisch.net"
+            docker.run "portainer", image: "portainer/portainer:latest", daemonize: true, args: "--publish 0.0.0.0:12468:9000 -v /var/run/docker.sock:/var/run/docker.sock"
         end
     end
 
