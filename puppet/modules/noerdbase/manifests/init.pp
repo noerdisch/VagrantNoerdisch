@@ -240,4 +240,11 @@ class noerdbase {
             File["/etc/dnsmasq.conf"]
         ]
     }
+
+    service { "puppet":
+        ensure     => stopped,
+        enable     => false,
+        hasrestart => true,
+        hasstatus  => true
+    }
 }
