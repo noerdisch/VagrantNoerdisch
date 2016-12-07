@@ -73,10 +73,10 @@ The default engine used is PHP 5.6. To test your application with some different
 
 | PHP Version   | Prefix   | Dotfile  | Order |
 |---------------|----------|----------|-------|
-| 5.5           | `php55.` | `.php55` | #1    |
-| 5.6 (default) | `php56.` | `.php56` | #2    |
-| 7.0           | `php70.` | `.php70` | #3    |
-| 7.1           | `php71.` | `.php71` | #4    |
+| 5.5           | `php55.` | `.php55` | 1     |
+| 5.6 (default) | `php56.` | `.php56` | 2     |
+| 7.0           | `php70.` | `.php70` | 3     |
+| 7.1           | `php71.` | `.php71` | 4     |
 
 Otherwise you can place a file in `/var/www/$project` to pin a project to a specific version of PHP (see Dotfile-Column above). That file may be empty, as it's checked for existance only. So to pin a project (e.g. `test`) to PHP 5.5 run the following command on the web-host (`vagrant ssh phoenix-web` => `touch /var/www/test/.php55`). This will make nginx always pass requests to PHP 5.5.
 
