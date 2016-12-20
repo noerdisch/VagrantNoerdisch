@@ -76,7 +76,7 @@ class noerdproxy {
                 'enable',
                 'show-legends',
                 'show-node',
-                'uri /haproxy'
+                'uri /'
             ]
         }
     }

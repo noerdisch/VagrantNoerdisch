@@ -57,7 +57,7 @@ Please run a single `vagrant reload --provision` after initial setup. This is du
 |-------------------|-----------------------------------|------------------------------|---------------------|----------|
 | Wildcard          | *project*.local.noerdisch.net     | `/var/www/$project/Web/`     | 192.168.50.50:80    | HTTP     |
 | Symfony2 Wildcard | *project*.local-sf2.noerdisch.net | `/var/www/sf2/$project/web/` | 192.168.50.50:80    | HTTP     |
-| Haproxy Stats     | local.noerdisch.net:1936/haproxy  | *none*                       | 192.168.50.50:1936  | HTTP     |
+| Haproxy Stats     | local.noerdisch.net:1936          | *none*                       | 192.168.50.50:1936  | HTTP     |
 | MailHog           | local.noerdisch.net:8025          | *none*                       | 192.168.50.50:8025  | HTTP     |
 | Elasticsearch     | local.noerdisch.net:9200          | *none*                       | 192.168.50.50:9200  | HTTP     |
 | Portainer         | local.noerdisch.net:12468         | *none*                       | 192.168.50.50:12468 | HTTP     |
@@ -148,7 +148,7 @@ The box is using Ubuntu 16.04. The base box image is kept up to date on a spare-
 * [nginx](https://nginx.org)
 * [PHP](https://www.php.net) (5.5, 5.6, 7.0, 7.1) as CLI & FastCGI server, "batteries included" ([PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/+index))
 * [MailHog](https://github.com/mailhog/MailHog/) docker container accessible at http://local.noerdisch.net:8025
-* [haproxy](http://www.haproxy.org/) to pass traffic from web to database box ([stats](http://local.noerdisch.net:1936/haproxy), [PPA](https://launchpad.net/~vbernat/+archive/ubuntu/haproxy-1.6))
+* [haproxy](http://www.haproxy.org/) to pass traffic from web to database box ([stats](http://local.noerdisch.net:1936), [PPA](https://launchpad.net/~vbernat/+archive/ubuntu/haproxy-1.6))
 * [Elasticsearch](https://www.elastic.co/products/elasticsearch) 2.x vendor package (accessible at http://elasticsearch.local.noerdisch.net:9200/)
     * Plugin: [kopf](http://elasticsearch.local.noerdisch.net:9200/_plugin/kopf) ([source](https://github.com/lmenezes/elasticsearch-kopf))
     * Plugin: [head](http://elasticsearch.local.noerdisch.net:9200/_plugin/head) ([source](https://github.com/mobz/elasticsearch-head))
