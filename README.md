@@ -148,7 +148,7 @@ The box is using Ubuntu 16.04. The base box image is kept up to date on a spare-
 * [nginx](https://nginx.org)
 * [PHP](https://www.php.net) (5.5, 5.6, 7.0, 7.1) as CLI & FastCGI server, "batteries included" ([PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/+index))
 * [MailHog](https://github.com/mailhog/MailHog/) docker container accessible at http://local.noerdisch.net:8025
-* [haproxy](http://www.haproxy.org/) to pass traffic from web to database box ([stats](http://local.noerdisch.net:1936), [PPA](https://launchpad.net/~vbernat/+archive/ubuntu/haproxy-1.6))
+* [haproxy](http://www.haproxy.org/) to pass traffic from web to database box ([stats](http://local.noerdisch.net:1936), [PPA](https://launchpad.net/~vbernat/+archive/ubuntu/haproxy-1.7))
 * [Elasticsearch](https://www.elastic.co/products/elasticsearch) 2.x vendor package (accessible at http://elasticsearch.local.noerdisch.net:9200/)
     * Plugin: [kopf](http://elasticsearch.local.noerdisch.net:9200/_plugin/kopf) ([source](https://github.com/lmenezes/elasticsearch-kopf))
     * Plugin: [head](http://elasticsearch.local.noerdisch.net:9200/_plugin/head) ([source](https://github.com/mobz/elasticsearch-head))
