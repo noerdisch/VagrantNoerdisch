@@ -36,9 +36,11 @@ class noerdproxy {
         options            => {
             option => [
                 'forwardfor',
-                'httpchk GET / HTTP/1.0'
+                'httpchk GET / HTTP/1.0',
+                'http-keep-alive'
             ],
             'http-check' => 'expect string You\ Know,\ for\ Search',
+            'http-reuse' => 'safe',
         }
     }
 
