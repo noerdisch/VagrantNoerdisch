@@ -3,13 +3,13 @@ class noerdproxy {
 
     include apt
 
-    apt::ppa { 'ppa:vbernat/haproxy-1.6': }
+    apt::ppa { 'ppa:vbernat/haproxy-1.7': }
 
     class { 'haproxy':
         merge_options      => true,
         package_ensure     => 'latest',
         require            => [
-            Apt::Ppa['ppa:vbernat/haproxy-1.6']
+            Apt::Ppa['ppa:vbernat/haproxy-1.7']
         ]
     }
 
