@@ -73,16 +73,15 @@ The default engine used is PHP 5.6. To test your application with some different
 
 | PHP Version   | Prefix   | Dotfile  | Order |
 |---------------|----------|----------|-------|
-| 5.5           | `php55.` | `.php55` | 1     |
-| 5.6 (default) | `php56.` | `.php56` | 2     |
-| 7.0           | `php70.` | `.php70` | 3     |
-| 7.1           | `php71.` | `.php71` | 4     |
+| 5.6 (default) | `php56.` | `.php56` | 1     |
+| 7.0           | `php70.` | `.php70` | 2     |
+| 7.1           | `php71.` | `.php71` | 3     |
 
-Otherwise you can place a file in `/var/www/$project` to pin a project to a specific version of PHP (see Dotfile-Column above). That file may be empty, as it's checked for existance only. So to pin a project (e.g. `test`) to PHP 5.5 run the following command on the web-host (`vagrant ssh phoenix-web` => `touch /var/www/test/.php55`). This will make nginx always pass requests to PHP 5.5.
+Otherwise you can place a file in `/var/www/$project` to pin a project to a specific version of PHP (see Dotfile-Column above). That file may be empty, as it's checked for existance only. So to pin a project (e.g. `test`) to PHP 5.6 run the following command on the web-host (`vagrant ssh phoenix-web` => `touch /var/www/test/.php56`). This will make nginx always pass requests to PHP 5.6.
 
 If you place multiple dotfiles in your project directory the engine used is evaluated in the order shown above.
 
-When working on CLI you should specify your PHP Version in detail (e.g. `php5.5 /my/awesome/script.php`) to prevent falling back to some default (which is PHP 5.6).
+When working on CLI you should specify your PHP Version in detail (e.g. `php7.1 /my/awesome/script.php`) to prevent falling back to some default (which is PHP 5.6).
 
 ### Sites
 
@@ -100,7 +99,7 @@ This box has been optimized a little to make it work with TYPO3s multi-tree capa
 
 ```
 $engine .  $productionurl  . $project .local.noerdisch.net
- php55  . www.noerdisch.de .  noerd   .local.noerdisch.net
+ php70  . www.noerdisch.de .  noerd   .local.noerdisch.net
 ```
 
 The box (better: nginx) does set `HTTP_HOST` & `SERVER_NAME` to the same values to prevent falling into issues with TYPO3s trusted host patterns. Please keep that in mind and secure your installation accordingly!
@@ -146,7 +145,7 @@ The box is using Ubuntu 16.04. The base box image is kept up to date on a spare-
 * Memcached
 * Redis Server
 * [nginx](https://nginx.org)
-* [PHP](https://www.php.net) (5.5, 5.6, 7.0, 7.1) as CLI & FastCGI server, "batteries included" ([PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/+index))
+* [PHP](https://www.php.net) (5.6, 7.0, 7.1) as CLI & FastCGI server, "batteries included" ([PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/+index))
 * [MailHog](https://github.com/mailhog/MailHog/) docker container accessible at http://local.noerdisch.net:8025
 * [haproxy](http://www.haproxy.org/) to pass traffic from web to database box ([stats](http://local.noerdisch.net:1936), [PPA](https://launchpad.net/~vbernat/+archive/ubuntu/haproxy-1.7))
 * [Elasticsearch](https://www.elastic.co/products/elasticsearch) 2.x vendor package (accessible at http://elasticsearch.local.noerdisch.net:9200/)

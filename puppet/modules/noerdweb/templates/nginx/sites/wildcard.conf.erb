@@ -9,7 +9,7 @@ server {
     listen 443 ssl http2 default_server;
 
     server_name
-        "~(?<eengine>(php55|php56|php70|php71)?)((?<dot>\.)?((?<domhost>((.+\.)?(([a-z0-9]+(-[a-z0-9]{1,64})*\.)?)+[a-z]{2,6})))?(?<dot1>\.))?(?<project>.*)\.(?<environment>(<%= @environment %>|<%= @hostname %>))\.noerdisch\.net$";
+        "~(?<eengine>(php56|php70|php71)?)((?<dot>\.)?((?<domhost>((.+\.)?(([a-z0-9]+(-[a-z0-9]{1,64})*\.)?)+[a-z]{2,6})))?(?<dot1>\.))?(?<project>.*)\.(?<environment>(<%= @environment %>|<%= @hostname %>))\.noerdisch\.net$";
 
     access_log /var/log/nginx/access.$project.log;
 
@@ -24,11 +24,6 @@ server {
     index index.php index.html;
 
     set $pinned false;
-    if ( -f $project_root/.php55 ) {
-        set $engine php55_fpm;
-        set $pinned php55;
-    }
-
     if ( -f $project_root/.php56 ) {
         set $engine php56_fpm;
         set $pinned php56;

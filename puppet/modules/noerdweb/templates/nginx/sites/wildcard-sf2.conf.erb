@@ -8,7 +8,7 @@ server {
     listen 80;
 
     server_name
-        ~(?<eengine>(php55|php56|php70|php71)(?<dot>\.))?(?<project>.*)\.(?<environment>(<%= @environment %>-sf2)).noerdisch.net$;
+        ~(?<eengine>(php56|php70|php71)(?<dot>\.))?(?<project>.*)\.(?<environment>(<%= @environment %>-sf2)).noerdisch.net$;
 
     access_log /var/log/nginx/access.sf2fe-$project.log;
 
@@ -43,7 +43,7 @@ server {
     listen 127.0.0.1:8000;
 
     server_name
-        ~(?<eengine>(php55|php56|php70|php71)(?<dot>\.))?(?<project>.*)\.(?<environment>(<%= @environment %>-sf2)).noerdisch.net$;
+        ~(?<eengine>(php56|php70|php71)(?<dot>\.))?(?<project>.*)\.(?<environment>(<%= @environment %>-sf2)).noerdisch.net$;
 
     access_log /var/log/nginx/access.sf2-$project.log;
 
@@ -55,11 +55,6 @@ server {
     root $project_root/$docroot_part;
 
     set $pinned false;
-    if ( -f $project_root/.php55 ) {
-        set $engine php55_fpm;
-        set $pinned php55;
-    }
-
     if ( -f $project_root/.php56 ) {
         set $engine php56_fpm;
         set $pinned php56;
