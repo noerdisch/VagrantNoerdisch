@@ -53,15 +53,16 @@ Please run a single `vagrant reload --provision` after initial setup. This is du
 
 ## virtual Hosts / Services
 
-| Service           | URL                               | Document Root                | IP/Port             | Protocol |
-|-------------------|-----------------------------------|------------------------------|---------------------|----------|
-| Wildcard          | *project*.local.noerdisch.net     | `/var/www/$project/Web/`     | 192.168.50.50:80    | HTTP     |
-| Symfony2 Wildcard | *project*.local-sf2.noerdisch.net | `/var/www/sf2/$project/web/` | 192.168.50.50:80    | HTTP     |
-| Haproxy Stats     | local.noerdisch.net:1936          | *none*                       | 192.168.50.50:1936  | HTTP     |
-| MailHog           | local.noerdisch.net:8025          | *none*                       | 192.168.50.50:8025  | HTTP     |
-| Elasticsearch     | local.noerdisch.net:9200          | *none*                       | 192.168.50.50:9200  | HTTP     |
-| Portainer         | local.noerdisch.net:12468         | *none*                       | 192.168.50.50:12468 | HTTP     |
-| MySQL             | db.local.noerdisch.net            | *none*                       | 192.168.50.51:3306  | MySQL    |
+| Service           | URL                               | Document Root                | IP/Port             | Protocol   |
+|-------------------|-----------------------------------|------------------------------|---------------------|------------|
+| Wildcard          | *project*.local.noerdisch.net     | `/var/www/$project/Web/`     | 192.168.50.50:80    | HTTP       |
+| Symfony2 Wildcard | *project*.local-sf2.noerdisch.net | `/var/www/sf2/$project/web/` | 192.168.50.50:80    | HTTP       |
+| Haproxy Stats     | local.noerdisch.net:1936          | *none*                       | 192.168.50.50:1936  | HTTP       |
+| MailHog           | local.noerdisch.net:8025          | *none*                       | 192.168.50.50:8025  | HTTP       |
+| Elasticsearch     | local.noerdisch.net:9200          | *none*                       | 192.168.50.50:9200  | HTTP       |
+| Portainer         | local.noerdisch.net:12468         | *none*                       | 192.168.50.50:12468 | HTTP       |
+| MySQL             | db.local.noerdisch.net            | *none*                       | 192.168.50.51:3306  | MySQL      |
+| PostgreSQL        | db.local.noerdisch.net            | *none*                       | 192.168.50.51:5432  | PostgreSQL |
 
 As we've seen the majority of our projects use `html` as document root, nginx will prefer `html` over `Web` as document root. If however there is no `html` folder in place nginx will fall back to `Web` as document root to provide backwards compatibility.
 
@@ -116,24 +117,26 @@ Your project will be available at: `http://project.local-sf2.noerdisch.net`
 
 If you should have more specific requirements to your nginx configuration (or one of the wildcard configs does not match your needs) you can place your configuration in `_nginx-sites.d` within this directory. Puppet will copy those files on `vagrant provision` and include them into nginx main configuration file (make sure your configuration uses suffix `.conf` to be included).
 
-## Note on MySQL
+## Note on MySQL / PostgreSQL
 
-The stack comes with a MySQL database server installed on the host `phoenix-db`. Instead of typing some IP or long hostnames in your application you can use the shorthandle `db` as database host from within your applications. The Hostname `db` does resolve to `192.168.50.51`.
+The stack comes with a MySQL & PostgreSQL database server installed on the host `phoenix-db`. Instead of typing some IP or long hostnames in your application you can use the shorthandle `db` as database host from within your applications. The Hostname `db` does resolve to `192.168.50.51`.
 
-You can however use `127.0.0.1:3306` as database server too to provide some sort of "quick-start". Haproxy is in place to handle this and pass traffic from the web- to the database-box.
+You can however use `127.0.0.1:3306` (for MySQL) and `127.0.0.1:5432` (for PostgreSQL) as database server too to provide some sort of "quick-start". Haproxy is in place to handle this and pass traffic from the web- to the database-box.
 
-### MySQL Credentials
+### MySQL / PostgreSQL Credentials
 
 | Server      | Username   | Password  | Remarks                                        |
 |-------------|------------|-----------|------------------------------------------------|
 | phoenix-web | *vagrant*  | jolt200mg | your applications should use those credentials |
-| phoenix-db  | *root*     | jolt200mg | used for maintenance & stuff                   |
+| phoenix-db  | *root*     | jolt200mg | used for maintenance & stuff (MySQL only)      |
 
-You can use the database user *vagrant* to access the MySQL server from your host using tools like [Sequel Pro](http://www.sequelpro.com/) or [MySQL Workbench](https://www.mysql.de/products/workbench/) using the host `local.noerdisch.net` so you won't need something like phpMyAdmin or Adminer.
+You can use the database user *vagrant* to access the MySQL-/PostgreSQL Server from your host using tools like [Sequel Pro](http://www.sequelpro.com/) or [MySQL Workbench](https://www.mysql.de/products/workbench/) using the host `local.noerdisch.net` so you won't need something like phpMyAdmin or Adminer.
+
+The credentials for PostgreSQL are just the same for the user *vagrant*. You can use tools like [phpPgAdmin](https://github.com/phppgadmin/phppgadmin) to connect to PostgreSQL running on the Host `db`. 
 
 ## Note on Elasticsearch
 
-The box comes with 2 Elasticsearch nodes running as a cluster (Clustername is `noerdlastic_2x_local`, the version is pinned to 2.4.0 which marks the current stable 2.x Release).
+The box comes with 2 Elasticsearch nodes running as a cluster (Clustername is `noerdlastic_2x_local`, the version is pinned to 2.4.3 which marks the current stable 2.x Release).
 
 To access Plugins (see below for a list of installed ones) or use Elasticsearch from your computer in other ways there's a proxy-configuration on haproxy in place which makes you able to use the host http://elasticsearch.local.noerdisch.net:9200.
 
@@ -142,6 +145,7 @@ To access Plugins (see below for a list of installed ones) or use Elasticsearch 
 The box is using Ubuntu 16.04. The base box image is kept up to date on a spare-time base. The box is custom built at [nœrdisch - digital solutions](https://www.noerdisch.de/) for our needs and originally based upon [ffuenf/vagrant-boxes](https://github.com/ffuenf/vagrant-boxes).
 
 * MySQL Server 5.7 (credentials: see above)
+* PostgreSQL Server 9.5 (username: `vagrant`, password: `jolt200mg`)
 * Memcached
 * Redis Server
 * [nginx](https://nginx.org)

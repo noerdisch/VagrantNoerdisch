@@ -51,64 +51,32 @@ class noerdweb {
         command    => "chown -R vagrant:vagrant /var/log/nginx/*.log"
     }
 
-    file { "/etc/nginx/sites/wildcard.conf":
-        ensure     => file,
-        content    => template("noerdweb/nginx/sites/wildcard.conf.erb"),
-        require    => [
-            Package["nginx"],
-            File["/etc/nginx/sites"]
-        ]
-    }
+    $nginx_configs = [
+        "nginx.conf",
 
-    file { "/etc/nginx/sites/wildcard-sf2.conf":
-        ensure     => file,
-        content    => template("noerdweb/nginx/sites/wildcard-sf2.conf.erb"),
-        require    => [
-            Package["nginx"],
-            File["/etc/nginx/sites"]
-        ]
-    }
+        "conf.d/fastcgi_params",
+        "conf.d/fastcgi.conf",
+        "conf.d/mime.types",
+        "conf.d/upstreams.conf",
 
-    file { "/etc/nginx/nginx.conf":
-        ensure     => file,
-        content    => template("noerdweb/nginx/nginx.conf.erb"),
-        require    => [
-            Package["nginx"]
-        ]
-    }
+        "sites/wildcard.conf",
+        "sites/wildcard-sf2.conf",
+    ]
 
-    file { "/etc/nginx/conf.d/mime.types":
-        ensure     => file,
-        content    => template("noerdweb/nginx/conf.d/mime.types.erb"),
-        require    => [
-            Package["nginx"]
-        ]
-    }
+    each($nginx_configs) |$conf| {
+        file { "/etc/nginx/${conf}":
+            ensure     => file,
+            content    => template("noerdweb/nginx/${conf}.erb"),
+            require    => [
+                Package["nginx"],
 
-    file { "/etc/nginx/conf.d/fastcgi_params":
-        ensure     => file,
-        content    => template("noerdweb/nginx/conf.d/fastcgi_params.erb"),
-        require    => [
-            Package["nginx"]
-        ]
-    }
-
-    file { "/etc/nginx/conf.d/fastcgi.conf":
-        ensure     => file,
-        content    => template("noerdweb/nginx/conf.d/fastcgi.conf.erb"),
-        require    => [
-            Package["nginx"],
-            File["/etc/nginx/conf.d"]
-        ]
-    }
-
-    file { "/etc/nginx/conf.d/upstreams.conf":
-        ensure     => file,
-        content    => template("noerdweb/nginx/conf.d/upstreams.conf.erb"),
-        require    => [
-            Package["nginx"],
-            File["/etc/nginx/conf.d"]
-        ]
+                File["/etc/nginx/conf.d"],
+                File["/etc/nginx/sites"]
+            ],
+            notify     => [
+                Service["nginx"]
+            ]
+        }
     }
 
     service { "nginx":

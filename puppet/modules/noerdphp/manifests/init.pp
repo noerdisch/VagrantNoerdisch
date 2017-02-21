@@ -44,6 +44,7 @@ class noerdphp {
         "php-ssh2",
         "php-http",
         "php-yaml",
+        "php-pgsql",
         "php-redis",
         "php-xdebug",
         "php-imagick",

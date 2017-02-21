@@ -45,6 +45,8 @@ class noerdbase {
     ]
 
     sysctl { 'vm.swappiness':                 value => '2' }
+    # https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
+    sysctl { 'vm.max_map_count':              value => '262144' }
     sysctl { 'fs.aio-max-nr':                 value => '10000000' }
     sysctl { 'fs.file-max':                   value => '262144' }
     sysctl { 'net.ipv4.tcp_max_syn_backlog':  value => '4096' }

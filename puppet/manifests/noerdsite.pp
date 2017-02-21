@@ -22,4 +22,5 @@ node 'phoenix-db' {
     include noerdmysql
     include noerdmysqlclient
     include noerdlastic
+    include noerdgresql
 }

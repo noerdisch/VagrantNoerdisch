@@ -28,6 +28,21 @@ class noerdproxy {
         }
     }
 
+    haproxy::listen { 'postgres5432':
+        collect_exported   => false,
+        ipaddress          => '0.0.0.0',
+        ports              => '5432',
+        mode               => 'tcp',
+        options            => {
+            'timeout client' => '30m',
+            'timeout server' => '30m',
+            'option'         => [
+                'pgsql-check user vagrant',
+                'tcpka',
+            ]
+        }
+    }
+
     haproxy::listen { 'elasticsearch9200':
         collect_exported   => false,
         ipaddress          => '0.0.0.0',
@@ -44,11 +59,19 @@ class noerdproxy {
         }
     }
 
-    haproxy::balancermember { 'phoenix_db':
+    haproxy::balancermember { 'phoenix_db_mysql':
         server_names       => 'phoenix_db',
         listening_service  => 'mysql3306',
         ipaddresses        => $::db_host,
         ports              => '3306',
+        options            => 'check'
+    }
+
+    haproxy::balancermember { 'phoenix_db_pgsql':
+        server_names       => 'phoenix_db',
+        listening_service  => 'postgres5432',
+        ipaddresses        => $::db_host,
+        ports              => '5432',
         options            => 'check'
     }
 
