@@ -41,6 +41,10 @@ Change to the cloned repository
 
     cd ~/VagrantNoerdisch
 
+Update the Git Submodules used for external dependencies
+
+    git submodule update --init
+
 Boot up the virtual box:
 
     vagrant up --provision
@@ -179,4 +183,3 @@ If you're interested get in touch with us: [nœrdisch - digital solutions](https
 
 This Vagrant box is licensed under the permissive [MIT license](http://opensource.org/licenses/MIT) - have fun with it!
 
-Any 3rd-Party Puppet modules distributed with this box (`puppet/modules-forge`) are subject to their corresponding LICENSE.

@@ -1,0 +1,36 @@
+[submodule "puppet/modules-forge/apt"]
+	path = puppet/modules-forge/apt
+	url = https://github.com/puppetlabs/puppetlabs-apt.git
+[submodule "puppet/modules-forge/concat"]
+	path = puppet/modules-forge/concat
+	url = https://github.com/puppetlabs/puppetlabs-concat.git
+[submodule "puppet/modules-forge/datacat"]
+	path = puppet/modules-forge/datacat
+	url = https://github.com/richardc/puppet-datacat.git
+[submodule "puppet/modules-forge/elasticsearch"]
+	path = puppet/modules-forge/elasticsearch
+	url = https://github.com/elastic/puppet-elasticsearch.git
+[submodule "puppet/modules-forge/haproxy"]
+	path = puppet/modules-forge/haproxy
+	url = https://github.com/puppetlabs/puppetlabs-haproxy.git
+[submodule "puppet/modules-forge/locales"]
+	path = puppet/modules-forge/locales
+	url = https://github.com/saz/puppet-locales.git
+[submodule "puppet/modules-forge/mysql"]
+	path = puppet/modules-forge/mysql
+	url = https://github.com/puppetlabs/puppetlabs-mysql.git
+[submodule "puppet/modules-forge/postgresql"]
+	path = puppet/modules-forge/postgresql
+	url = https://github.com/puppetlabs/puppetlabs-postgresql.git
+[submodule "puppet/modules-forge/staging"]
+	path = puppet/modules-forge/staging
+	url = https://github.com/nanliu/puppet-staging.git
+[submodule "puppet/modules-forge/stdlib"]
+	path = puppet/modules-forge/stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "puppet/modules-forge/sysctl"]
+	path = puppet/modules-forge/sysctl
+	url = https://github.com/thias/puppet-sysctl.git
+[submodule "puppet/modules-forge/timezone"]
+	path = puppet/modules-forge/timezone
+	url = https://github.com/saz/puppet-timezone.git
