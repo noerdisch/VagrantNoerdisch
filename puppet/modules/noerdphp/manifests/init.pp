@@ -69,7 +69,7 @@ class noerdphp {
         "7.1" => "71"
     }
 
-    $default_version = "5.6"
+    $default_version = "7.0"
 
     each($versions) |$version_package, $version_symlink| {
 
