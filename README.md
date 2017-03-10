@@ -74,19 +74,19 @@ As we've seen the majority of our projects use `html` as document root, nginx wi
 
 Based on the awesome [PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php/+index) of [Ondřej Surý](https://deb.sury.org/#donate) this box does provide a couple of different PHP versions.
 
-The default engine used is PHP 5.6. To test your application with some different Version just prefix the project URL with one of the following values:
+The default engine used is PHP 7.0. To test your application with some different Version just prefix the project URL with one of the following values:
 
 | PHP Version   | Prefix   | Dotfile  | Order |
 |---------------|----------|----------|-------|
-| 5.6 (default) | `php56.` | `.php56` | 1     |
-| 7.0           | `php70.` | `.php70` | 2     |
+| 5.6           | `php56.` | `.php56` | 1     |
+| 7.0 (default) | `php70.` | `.php70` | 2     |
 | 7.1           | `php71.` | `.php71` | 3     |
 
 Otherwise you can place a file in `/var/www/$project` to pin a project to a specific version of PHP (see Dotfile-Column above). That file may be empty, as it's checked for existance only. So to pin a project (e.g. `test`) to PHP 5.6 run the following command on the web-host (`vagrant ssh phoenix-web` => `touch /var/www/test/.php56`). This will make nginx always pass requests to PHP 5.6.
 
 If you place multiple dotfiles in your project directory the engine used is evaluated in the order shown above.
 
-When working on CLI you should specify your PHP Version in detail (e.g. `php7.1 /my/awesome/script.php`) to prevent falling back to some default (which is PHP 5.6).
+When working on CLI you should specify your PHP Version in detail (e.g. `php7.1 /my/awesome/script.php`) to prevent falling back to some default (which is PHP 7.0).
 
 ### Sites
 
@@ -104,7 +104,7 @@ This box has been optimized a little to make it work with TYPO3s multi-tree capa
 
 ```
 $engine .  $productionurl  . $project .local.noerdisch.net
- php70  . www.noerdisch.de .  noerd   .local.noerdisch.net
+ php71  . www.noerdisch.de .  noerd   .local.noerdisch.net
 ```
 
 The box (better: nginx) does set `HTTP_HOST` & `SERVER_NAME` to the same values to prevent falling into issues with TYPO3s trusted host patterns. Please keep that in mind and secure your installation accordingly!
