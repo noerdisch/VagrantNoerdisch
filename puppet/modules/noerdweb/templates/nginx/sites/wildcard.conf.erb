@@ -52,6 +52,12 @@ server {
         try_files $uri =204;
     }
 
+    location ~* \.(ttf|ttc|otf|eot|woff|woff2)$ {
+        add_header "Cache-Control" "public";
+        add_header "Access-Control-Allow-Origin" "*";
+        add_header "X-Content-Type-Options" "nosniff";
+    }
+
     location ~* (^|/)\. {
         add_header "X-Status-Cause" "config" always;
         return 403;
