@@ -5,9 +5,18 @@ class noerdweb {
         ensure     => latest
     }
 
+    tidy { "clean_etc_nginx_sites_d":
+        path            => "/etc/nginx/sites.d",
+        recurse         => true,
+        matches         => '*',
+        require         => Package["nginx"],
+    }
+
     file { ["/etc/nginx/conf.d", "/etc/nginx/sites", "/var/www/sf2" ]:
         ensure     => directory,
-        require    => Package["nginx"]
+        require    => [
+            Package["nginx"]
+        ]
     }
 
     file { "nginx_copy_certificates":
@@ -19,7 +28,6 @@ class noerdweb {
         group      => 'root',
         replace    => true,
         recurse    => remote,
-        notify     => Service["nginx"]
     }
 
     file { "nginx_copy_additional_sites":
@@ -32,7 +40,7 @@ class noerdweb {
         group      => 'root',
         replace    => true,
         recurse    => remote,
-        notify     => Service["nginx"]
+        require    => Tidy["clean_etc_nginx_sites_d"]
     }
 
     file { "/var/log/nginx/":
