@@ -2,7 +2,7 @@
 
 This is the general purpose development stack used at [nœrdisch - digital solutions](https://www.noerdisch.de/) for legacy projects and fun & pleasure.
 
-The GitHub version published here is known internally as v2.3.0 without some customer-specific, confidential modules.
+The GitHub version published here is known internally as v2.3.0 without some customer-specific, confidential modules. The release Versions might jump from time to time (e.g. from v2.18.0 to v2.20.0). This is due the fact we're using patches to update this OpenSource Version of our internal Version on spare-time base. We will however keep the versionnumbers in sync with the internal Version.
 
 The stack is created in two machines. One box for anything web-related, the other box for anything database related. Both boxes have about 50 GB disk space (used for operating system, databases & stuff like that, excluding your projects), will use 25% of total RAM on the host system in total (e.g. 4 GB divided into two slices per 2 GB if you got 16 Gigs on your host) and all CPU cores of your system which should be suitable for most projects you run in this box.
 
@@ -136,7 +136,7 @@ You can however use `127.0.0.1:3306` (for MySQL) and `127.0.0.1:5432` (for Postg
 
 You can use the database user *vagrant* to access the MySQL-/PostgreSQL Server from your host using tools like [Sequel Pro](http://www.sequelpro.com/) or [MySQL Workbench](https://www.mysql.de/products/workbench/) using the host `local.noerdisch.net` so you won't need something like phpMyAdmin or Adminer.
 
-The credentials for PostgreSQL are just the same for the user *vagrant*. You can use tools like [phpPgAdmin](https://github.com/phppgadmin/phppgadmin) to connect to PostgreSQL running on the Host `db`. 
+The credentials for PostgreSQL are just the same for the user *vagrant*. You can use tools like [phpPgAdmin](https://github.com/phppgadmin/phppgadmin) to connect to PostgreSQL running on the Host `db`.
 
 ## Note on Elasticsearch
 
@@ -182,4 +182,3 @@ If you're interested get in touch with us: [nœrdisch - digital solutions](https
 ## License
 
 This Vagrant box is licensed under the permissive [MIT license](http://opensource.org/licenses/MIT) - have fun with it!
-
