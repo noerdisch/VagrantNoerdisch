@@ -61,6 +61,7 @@ Please run a single `vagrant reload --provision` after initial setup. This is du
 |-------------------|-----------------------------------|------------------------------|---------------------|------------|
 | Wildcard          | *project*.local.noerdisch.net     | `/var/www/$project/Web/`     | 192.168.50.50:80    | HTTP       |
 | Symfony2 Wildcard | *project*.local-sf2.noerdisch.net | `/var/www/sf2/$project/web/` | 192.168.50.50:80    | HTTP       |
+| Shopware Wildcard | *project*.local-sw5.noerdisch.net | `/var/www/sw5/$project/web/` | 192.168.50.50:80    | HTTP       |
 | Haproxy Stats     | local.noerdisch.net:1936          | *none*                       | 192.168.50.50:1936  | HTTP       |
 | MailHog           | local.noerdisch.net:8025          | *none*                       | 192.168.50.50:8025  | HTTP       |
 | Elasticsearch     | local.noerdisch.net:9200          | *none*                       | 192.168.50.50:9200  | HTTP       |
@@ -109,13 +110,21 @@ $engine .  $productionurl  . $project .local.noerdisch.net
 
 The box (better: nginx) does set `HTTP_HOST` & `SERVER_NAME` to the same values to prevent falling into issues with TYPO3s trusted host patterns. Please keep that in mind and secure your installation accordingly!
 
-#### Symfony2
+#### Symfony Framework
 
-There's another wildcard vHost configured to run Symfony2 projects. Symfony2 project are able to live underneath the folder `/var/www/sf2/$project` (`_vHosts/sf2` folder within this repository on your Local Disk - created during `vagrant provision`).
+There's another wildcard vHost configured to run Symfony projects. Symfony project are able to live underneath the folder `/var/www/sf2/$project` (`_vHosts/sf2` folder within this repository on your Local Disk - created during `vagrant provision`).
 
-This is another virtual host on the list as the default rewrite with which you're able to run virtually anything which rewrites its requests to `/index.php` won't fit for Symfony2 projects. We need `/app.php` respectively `/app_dev.php` here and a lowercase "web" as document root (which _does_ matter on case sensitive filesystems).
+This is another virtual host on the list as the default rewrite with which you're able to run virtually anything which rewrites its requests to `/index.php` won't fit for Symfony projects. We need `/app.php` respectively `/app_dev.php` here and a lowercase "web" as document root (which _does_ matter on case sensitive filesystems).
 
 Your project will be available at: `http://project.local-sf2.noerdisch.net`
+
+#### Shopware 5
+
+Apart from Symfony we have another special wildcard vHost configured to run Shopware 5 projects. Shopware 5 project are running in the folder `/var/www/sw5/$project` (`_vHosts/sw5` folder within this repository on your Local Disk - created during `vagrant provision`).
+
+This is another virtual host on the list as the default rewrite on our "universal vHost" does not fit the needs for Shopware Projects as it needs to rewrite its requests to `/shopware.php` and has some other rewrites in place to operate properly.
+
+Your project will be available at: `http://project.local-sw5.noerdisch.net`
 
 #### Additional Sites
 

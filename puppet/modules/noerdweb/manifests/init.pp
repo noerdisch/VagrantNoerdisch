@@ -12,7 +12,7 @@ class noerdweb {
         require         => Package["nginx"],
     }
 
-    file { ["/etc/nginx/conf.d", "/etc/nginx/sites", "/var/www/sf2" ]:
+    file { ["/etc/nginx/conf.d", "/etc/nginx/sites", "/var/www/sf2", "/var/www/sw5" ]:
         ensure     => directory,
         require    => [
             Package["nginx"]
@@ -69,6 +69,7 @@ class noerdweb {
 
         "sites/wildcard.conf",
         "sites/wildcard-sf2.conf",
+        "sites/wildcard-sw5.conf"
     ]
 
     each($nginx_configs) |$conf| {
@@ -100,6 +101,7 @@ class noerdweb {
 
             File["/etc/nginx/sites/wildcard.conf"],
             File["/etc/nginx/sites/wildcard-sf2.conf"],
+            File["/etc/nginx/sites/wildcard-sw5.conf"],
 
             File["/etc/nginx/conf.d/mime.types"],
             File["/etc/nginx/conf.d/fastcgi.conf"],

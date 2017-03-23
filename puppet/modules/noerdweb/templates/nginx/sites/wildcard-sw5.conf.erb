@@ -1,0 +1,198 @@
+#####
+## THIS FILE IS MANAGED BY PUPPET
+##
+## DO NOT TOUCH!
+#####
+
+server {
+    listen 80;
+
+    server_name
+        ~(?<eengine>(php56|php70|php71)(?<dot>\.))?(?<project>.*)\.(?<environment>(<%= @environment %>-sw5)).noerdisch.net$;
+
+    access_log /var/log/nginx/access.sw5-$project.log;
+
+    set $project_root "/var/www/sw5/$project";
+    set $docroot_part "Web";
+    if ( -d $project_root/html ) {
+        set $docroot_part "html";
+    }
+
+    root $project_root/$docroot_part;
+
+    index shopware.php;
+
+    set $pinned false;
+    if ( -f $project_root/.php56 ) {
+        set $engine php56_fpm;
+        set $pinned php56;
+    }
+
+    if ( -f $project_root/.php70 ) {
+        set $engine php70_fpm;
+        set $pinned php70;
+    }
+
+    if ( -f $project_root/.php71 ) {
+        set $engine php71_fpm;
+        set $pinned php71;
+    }
+
+    add_header "X-Noerd-Config" "wildcard-sw5" always;
+    add_header "X-Noerd-Project" $project always;
+    add_header "X-Noerd-Project-Root" $project_root always;
+    add_header "X-Noerd-DomHost" $domhost always;
+    add_header "X-Noerd-Expected-Engine" $eengine always;
+    add_header "X-Noerd-Evaluated-Engine" $engine always;
+    add_header "X-Noerd-Pinned-Engine" $pinned always;
+
+    ## TODO: add `fastcgi_param` in PHP Block:
+    # fastcgi_param SHOPWARE_ENV $shopware_env if_not_empty;
+    set $shopware_env development;
+    ## END TODO
+
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+
+    ## Deny all attempts to access hidden files such as .htaccess, .htpasswd, .DS_Store (Mac).
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    ## Deny all attems to access possible configuration files
+    location ~ \.(tpl|yml|ini|log)$ {
+        deny all;
+    }
+
+    ## Deny access to media upload folder
+    location ^~ /media/temp/ {
+        deny all;
+    }
+
+    # Shopware caches and logs
+    location ^~ /var/ {
+        deny all;
+    }
+
+    # Deny access to root files
+    location ~ (autoload\.php|composer\.(json|lock|phar)|CONTRIBUTING\.md|eula.*\.txt|license\.txt|README\.md|UPGRADE\.md)$ {
+        return 404;
+    }
+
+    location ^~ /files/documents/ {
+        deny all;
+    }
+
+    # Block direct access to ESDs, but allow the follwing download options:
+    #  * 'PHP' (slow)
+    #  * 'X-Accel' (optimized)
+    # Also see http://wiki.shopware.com/ESD_detail_1116.html#Ab_Shopware_4.2.2
+    location ^~ /files/552211cce724117c3178e3d22bec532ec/ {
+        internal;
+    }
+
+    # Shopware install / update
+    location /recovery/install {
+        index index.php;
+        try_files $uri /recovery/install/index.php$is_args$args;
+    }
+
+    location /recovery/update {
+        index index.php;
+        try_files $uri /recovery/update/index.php?$is_args$args;
+    }
+
+    location / {
+        location ~* "^/themes/Frontend/Responsive/frontend/_public/vendors/fonts/open-sans-fontface/(?:.+)\.(?:ttf|eot|svg|woff)$" {
+            expires max;
+            add_header Cache-Control "public";
+            access_log off;
+            log_not_found off;
+        }
+
+        location ~* "^/themes/Frontend/Responsive/frontend/_public/src/fonts/(?:.+)\.(?:ttf|eot|svg|woff)$" {
+            expires max;
+            add_header Cache-Control "public";
+            access_log off;
+            log_not_found off;
+        }
+
+        location ~* "^/web/cache/(?:[0-9]{10})_(?:.+)\.(?:js|css)$" {
+            expires max;
+            add_header Cache-Control "public";
+            access_log off;
+            log_not_found off;
+        }
+
+        ## All static files will be served directly.
+        location ~* ^.+\.(?:css|cur|js|jpe?g|gif|ico|png|svg|html)$ {
+            ## Defining rewrite rules
+            rewrite files/documents/.* /engine last;
+            rewrite backend/media/(.*) /media/$1 last;
+
+            expires 1w;
+            add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+
+            access_log off;
+            # The directive enables or disables messages in error_log about files not found on disk.
+            log_not_found off;
+
+            tcp_nodelay off;
+            ## Set the OS file cache.
+            open_file_cache max=3000 inactive=120s;
+            open_file_cache_valid 45s;
+            open_file_cache_min_uses 2;
+            open_file_cache_errors off;
+
+            ## Fallback to shopware
+            ## comment in if needed
+            try_files $uri /shopware.php?controller=Media&action=fallback;
+        }
+
+        index shopware.php index.php;
+        try_files $uri $uri/ /shopware.php$is_args$args;
+    }
+
+    ## XML Sitemap support.
+    location = /sitemap.xml {
+        log_not_found off;
+        access_log off;
+        try_files $uri @shopware;
+    }
+
+    ## XML SitemapMobile support.
+    location = /sitemapMobile.xml {
+        log_not_found off;
+        access_log off;
+        try_files $uri @shopware;
+    }
+
+    ## robots.txt support.
+    location = /robots.txt {
+        log_not_found off;
+        access_log off;
+        try_files $uri @shopware;
+    }
+
+    location @shopware {
+        rewrite / /shopware.php;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php$is_args$args;
+
+        fastcgi_split_path_info ^(.+\.php)(.*)$;
+
+        include conf.d/fastcgi.conf;
+        include conf.d/fastcgi_params;
+
+        fastcgi_param SHOPWARE_ENV $shopware_env if_not_empty;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+
+        fastcgi_pass $engine;
+    }
+}
