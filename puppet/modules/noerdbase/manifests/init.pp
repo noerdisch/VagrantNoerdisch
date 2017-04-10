@@ -196,6 +196,14 @@ class noerdbase {
         content         => template("noerdbase/motd.erb")
     }
 
+    file { "/etc/profile.d/noerdisch.sh":
+        ensure          => file,
+        content         => template("noerdbase/noerdisch.sh.erb"),
+        owner            => 'root',
+        group            => 'root',
+        mode             => '0644'
+    }
+
     file { "/usr/local/bin/node":
         ensure          => 'link',
         target          => '/usr/bin/nodejs',

@@ -16,23 +16,3 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
-
-# Noerdisch Settings
-export NOERD_LOCAL=1
-export NOERD_STAGE="<%= @environment %>"
-export NOERD_ENVIRONMENT="<%= @environment %>"
-
-# TYPO3 CMS Settings
-export TYPO3_CONTEXT="Development/<%= @login_user %>"
-
-# Shopware Settings
-export SHOPWARE_ENV="development"
-
-# Neos/Flow Settings
-export FLOW_CONTEXT="Development/Local"
-
-# PostgreSQL Connection Settings
-export PGHOST=127.0.0.1
-export PGPORT=5432
-export PGUSER=vagrant
-export PGPASSWORD=<%= @default_password %>
