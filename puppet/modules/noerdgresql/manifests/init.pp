@@ -5,7 +5,6 @@ class noerdgresql {
         package_name               => 'postgresql-9.5',
         package_ensure             => latest,
         listen_addresses           => '*',
-        postgres_password          => $::default_password,
         service_manage             => true,
         service_restart_on_change  => true,
         ip_mask_allow_all_users    => '0.0.0.0/0',
@@ -30,18 +29,25 @@ class noerdgresql {
         auth_method                => 'trust',
     }
 
-    postgresql::server::role { "vagrant":
+    postgresql::server::role { 'vagrant':
         password_hash              => postgresql_password('vagrant', $::default_password),
         superuser                  => true,
         createdb                   => true,
         createrole                 => true,
     }
 
-    postgresql::server::config_entry { 'max_connections':
-        value                      => 250
+    $config_values = {
+        'max_connections' => 250,
+        'shared_buffers'  => '128MB',
+        'lc_messages'     => 'en_US.UTF-8',
+        'lc_monetary'     => 'en_US.UTF-8',
+        'lc_numeric'      => 'en_US.UTF-8',
+        'lc_time'         => 'en_US.UTF-8'
     }
 
-    postgresql::server::config_entry { 'shared_buffers':
-        value                      => '128MB'
+    each($config_values) |$key, $value| {
+        postgresql::server::config_entry { $key:
+            value => $value
+        }
     }
 }
