@@ -40,6 +40,10 @@ fastcgi_param  TYPO3_CONTEXT      Development/<%= @login_user %>;
 fastcgi_param  FLOW_CONTEXT       Development/Local;
 fastcgi_param  FLOW_REWRITEURLS   1;
 
+# Move Neos.Flow Caches to a local FS to reduce load on NFS
+# Still taking ages to load in development mode.
+fastcgi_param  FLOW_PATH_TEMPORARY_BASE /tmp/flow_$project;
+
 fastcgi_param  SHOPWARE_ENV       $shopware_env if_not_empty;
 
 fastcgi_param  NOERD_LOCAL        1;
@@ -50,4 +54,5 @@ fastcgi_param  NOERD_DOMHOST      $domhost;
 fastcgi_param  NOERD_ENGINE       $engine;
 fastcgi_param  NOERD_EENGINE      $eengine;
 fastcgi_param  NOERD_PINNED       $pinned;
-fastcgi_param  NOERD_ENVIRONMENT  $environment;
+fastcgi_param  NOERD_ENV          <%= @environment %>;
+fastcgi_param  NOERD_ENVIRONMENT  <%= @environment %>;
