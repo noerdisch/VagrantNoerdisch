@@ -110,6 +110,14 @@ $engine .  $productionurl  . $project .local.noerdisch.net
 
 The box (better: nginx) does set `HTTP_HOST` & `SERVER_NAME` to the same values to prevent falling into issues with TYPO3s trusted host patterns. Please keep that in mind and secure your installation accordingly!
 
+##### Note on Neos/Flow
+
+Caches are written to `/tmp/flow_$project` to get them off the NFS shares to improve speed a little. That means you have to prefix your `./flow` CLI calls with the environment variable `FLOW_PATH_TEMPORARY_BASE` pointing to the instance cache folder. Otherwise you might generate two cache versions (one for CLI, one for Web) which might cause unintended behaviour. So your CLI calls to `flow` should look like this in the end:
+
+`FLOW_PATH_TEMPORARY_BASE=/tmp/flow_neosio php71 ./flow doctrine:migrationstatus`
+
+Freezing packages (`flow package:freeze`) generally helps a lot. Keep in mind to unfreeze (`flow package:freeze --packagekey=Your.PackageKey`) the package(s) you're working on though.
+
 #### Symfony Framework
 
 There's another wildcard vHost configured to run Symfony projects. Symfony project are able to live underneath the folder `/var/www/sf2/$project` (`_vHosts/sf2` folder within this repository on your Local Disk - created during `vagrant provision`).
