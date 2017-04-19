@@ -48,6 +48,7 @@ class noerdphp {
         "php-redis",
         "php-xdebug",
         "php-imagick",
+        "php-gmagick",
         "php-memcache",
 
         "blackfire-php",
