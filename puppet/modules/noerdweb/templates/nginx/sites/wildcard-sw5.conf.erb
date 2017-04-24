@@ -46,11 +46,6 @@ server {
     add_header "X-Noerd-Evaluated-Engine" $engine always;
     add_header "X-Noerd-Pinned-Engine" $pinned always;
 
-    ## TODO: add `fastcgi_param` in PHP Block:
-    # fastcgi_param SHOPWARE_ENV $shopware_env if_not_empty;
-    set $shopware_env development;
-    ## END TODO
-
     location = /favicon.ico {
         log_not_found off;
         access_log off;
@@ -192,7 +187,6 @@ server {
         include conf.d/fastcgi.conf;
         include conf.d/fastcgi_params;
 
-        fastcgi_param SHOPWARE_ENV $shopware_env if_not_empty;
         fastcgi_param PATH_INFO $fastcgi_path_info;
 
         fastcgi_pass $engine;
