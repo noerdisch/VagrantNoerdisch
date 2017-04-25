@@ -47,12 +47,15 @@ class noerdphp {
         "php-pgsql",
         "php-redis",
         "php-xdebug",
-        "php-imagick",
         "php-gmagick",
         "php-memcache",
 
         "blackfire-php",
         "blackfire-agent",
+    ]
+
+    $remove_common_php_packages = [
+        "php-imagick",
     ]
 
     package { $install_common_php_packages:
@@ -62,6 +65,10 @@ class noerdphp {
             Apt::Source["blackfireio"],
             Exec["aptget_update_after_ppa"]
         ]
+    }
+
+    package { $remove_common_php_packages:
+        ensure     => "absent",
     }
 
     $versions = {
