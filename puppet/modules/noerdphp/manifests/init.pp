@@ -176,6 +176,7 @@ class noerdphp {
             ],
             subscribe  => [
                 Package[$install_common_php_packages],
+                Package[$remove_common_php_packages],
 
                 Package[$install_version_packages],
                 Package[$install_service_version_packages],
