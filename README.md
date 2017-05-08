@@ -25,7 +25,7 @@ The combination of Vagrant & Virtualbox is critical. There are way to many issue
 
 #### Supported host operating systems:
 
-* Mac OS X 10.11.x
+* Mac OS X 10.11.x (please note there's an open issue affecting 10.12.x: [GitHub #8061](https://github.com/mitchellh/vagrant/issues/8061))
 * Linux (Ubuntu 16.04 LTS, other Distributions to be tested)
 * **never** to be added: any Windows Version (even though there are reports it works, it'll never going to be official)
 
