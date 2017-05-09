@@ -18,8 +18,10 @@ export SHOPWARE_ENV="<%= @environment %>"
 # Neos/Flow Settings
 export FLOW_CONTEXT="Development/Local"
 
+<% if @hostname == 'phoenix-web' %>
 # PostgreSQL Connection Settings
 export PGHOST=127.0.0.1
 export PGPORT=5432
 export PGUSER=vagrant
 export PGPASSWORD=<%= @default_password %>
+<% end %>

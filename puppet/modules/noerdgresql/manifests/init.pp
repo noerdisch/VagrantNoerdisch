@@ -1,6 +1,10 @@
 class noerdgresql {
     Class["noerdbase"] -> Class["noerdgresql"]
 
+    exec { 'compile_enUS_locale':
+        command                    => "localedef -f UTF-8 -i en_US en_US.UTF-8 && locale-gen en_US"
+    }
+
     class { 'postgresql::server':
         package_name               => 'postgresql-9.5',
         package_ensure             => latest,
@@ -8,17 +12,19 @@ class noerdgresql {
         service_manage             => true,
         service_restart_on_change  => true,
         ip_mask_allow_all_users    => '0.0.0.0/0',
-        #ip_mask_deny_postgres_user => '172.16.0.0/16'
+        require                    => Exec['compile_enUS_locale']
     }
 
     class { 'postgresql::client':
         package_name               => 'postgresql-client-9.5',
         package_ensure             => latest,
+        require                    => Exec['compile_enUS_locale']
     }
 
     class { 'postgresql::server::contrib':
         package_name               => 'postgresql-contrib-9.5',
-        package_ensure             => latest
+        package_ensure             => latest,
+        require                    => Exec['compile_enUS_locale']
     }
 
     postgresql::server::pg_hba_rule { 'Open PostgreSQL for phoenix-web':

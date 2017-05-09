@@ -57,6 +57,7 @@ class noerdbase {
     sysctl { 'net.core.somaxconn':            value => '65536' }
 
     class { 'locales':
+        autoupgrade     => true,
         default_locale  => 'en_US.UTF-8',
         locales         => ['en_US.UTF-8 UTF-8', 'de_DE.UTF-8 UTF-8'],
     }
