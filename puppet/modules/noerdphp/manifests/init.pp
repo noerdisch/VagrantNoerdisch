@@ -33,6 +33,12 @@ class noerdphp {
         refreshonly => true
     }
 
+    $composer = "/usr/local/bin/composer"
+    exec { "download_composer":
+        command    => "wget https://getcomposer.org/download/1.3.2/composer.phar -O $composer && chmod +rwx $composer",
+        creates    => $composer
+    }
+
     file { "/var/log/php":
         ensure     => directory,
         owner      => "vagrant",
