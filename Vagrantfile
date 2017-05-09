@@ -94,7 +94,7 @@ Vagrant.configure("2") do |config|
             :nfs => true,
             :nfs_version => 3,
             :nfs_udp => false,
-            :mount_options => [ 'rsize=32768', 'wsize=32768', 'vers=3', 'tcp', 'fsc', 'intr', 'nolock', 'noatime', 'nodiratime','retrans=3' ]
+            :mount_options => [ 'rsize=32768', 'wsize=32768', 'vers=3', 'tcp', 'intr', 'nolock', 'noatime', 'nodiratime', 'retrans=3' ]
         box.vm.hostname = "phoenix-db"
         box.vm.provider "virtualbox" do |vb|
             vb.name      = "Noerdisch Development Stack (OpenSource DB)"
