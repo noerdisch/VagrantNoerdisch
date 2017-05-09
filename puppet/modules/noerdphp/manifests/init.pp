@@ -33,6 +33,12 @@ class noerdphp {
         refreshonly => true
     }
 
+    exec { "get_ioncubeloader":
+        cwd     => '/tmp',
+        command => "wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && tar xzf ioncube_loaders_lin_x86-64.tar.gz && mv ioncube/ /opt && touch /opt/ioncube/.installed",
+        creates => "/opt/ioncube/.installed"
+    }
+
     $composer = "/usr/local/bin/composer"
     exec { "download_composer":
         command    => "wget https://getcomposer.org/download/1.3.2/composer.phar -O $composer && chmod +rwx $composer",
@@ -75,6 +81,39 @@ class noerdphp {
 
     package { $remove_common_php_packages:
         ensure     => "absent",
+    }
+
+    $ioncube_versions = {
+        "5.6" => "20131226",
+        "7.0" => "20151012"
+    }
+
+    each($ioncube_versions) |$php_version, $phpapi_version| {
+        file { "/usr/lib/php/${phpapi_version}/ioncube_loader.so":
+            ensure     => file,
+            source     => "/opt/ioncube/ioncube_loader_lin_${php_version}.so",
+            require    => [
+                Exec["get_ioncubeloader"],
+                Package["php${php_version}-fpm"],
+                Package["php${php_version}-cli"]
+            ],
+            notify     => [
+                Service["php${php_version}-fpm"]
+            ]
+        }
+
+        file {["/etc/php/${php_version}/fpm/conf.d/00-ioncube.ini", "/etc/php/${php_version}/cli/conf.d/00-ioncube.ini"]:
+            ensure     => file,
+            content    => template("noerdphp/ioncube.ini.erb"),
+            require    => [
+                Exec["get_ioncubeloader"],
+                Package["php${php_version}-fpm"],
+                Package["php${php_version}-cli"]
+            ],
+            notify     => [
+                Service["php${php_version}-fpm"]
+            ]
+        }
     }
 
     $versions = {
