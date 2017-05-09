@@ -3,8 +3,14 @@ class noerdphp {
 
     include apt
 
+    exec { 'receive_php_ppa_key':
+        command    => "sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 4F4EA0AAE5267A6C",
+        onlyif     => "test 0 -eq $(apt-key list | grep E5267A6C | wc -l)"
+    }
+
     apt::ppa { 'ppa:ondrej/php':
         notify     => Exec["aptget_update_after_ppa"],
+        require    => Exec["receive_php_ppa_key"]
     }
 
     apt::source { 'blackfireio':
